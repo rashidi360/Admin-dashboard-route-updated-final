@@ -7,7 +7,8 @@ import {
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
-  MdDesignServices
+  MdDesignServices,
+  MdNotifications
 } from "react-icons/md";
 
 // Admin Imports
@@ -74,6 +75,13 @@ const routes = [
     layout: "/admin",
     path: "/services",
     icon: <Icon as={MdDesignServices} width="20px" height="20px" color="inherit" />,
+    // element: <Profile />,
+  },
+  {
+    name: "Notication Template",
+    layout: "/admin",
+    path: "/notification-template",
+    icon: <Icon as={MdNotifications} width="20px" height="20px" color="inherit" />,
     // element: <Profile />,
   },
   {
