@@ -32,6 +32,7 @@ import SignInCentered from "views/auth/signIn";
 import NotFound from "views/NotFound";
 import Test from "views/admin/dataTables/components/Test";
 import Notification from "views/admin/notification-template";
+import Form from "views/admin/notification-template/components/Form";
 //--------------------New Version Type1----------------------
 
 const router = createBrowserRouter([
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
         element: <DataTables />,
         children: [
           {
-            path: "test",
+            path: "data-tables/test",
             element: <Test />,
           },
         ],
@@ -78,7 +79,14 @@ const router = createBrowserRouter([
       {
         path: "notification-template",
         element: <Notification />,
+        children: [
+          {
+        path: "form",
+        element: <Form />,
       },
+        ]
+      },
+      
     ],
   },
   {

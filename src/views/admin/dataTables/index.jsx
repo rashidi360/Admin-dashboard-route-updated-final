@@ -44,7 +44,7 @@ export default function Settings() {
   // Chakra Color Mode
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <Link to={`test`} >
+      <Link to={`/admin/data-tables/test`} >
       <Button m={5}>Test</Button> </Link>
       <SimpleGrid
         mb='20px'
