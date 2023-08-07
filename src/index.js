@@ -33,6 +33,7 @@ import NotFound from "views/NotFound";
 import Test from "views/admin/dataTables/components/Test";
 import Notification from "views/admin/notification-template";
 import Form from "views/admin/notification-template/components/Form";
+import ViewTemplate from "views/admin/notification-template/components/ViewTemplate";
 //--------------------New Version Type1----------------------
 
 const router = createBrowserRouter([
@@ -79,14 +80,15 @@ const router = createBrowserRouter([
       {
         path: "notification-template",
         element: <Notification />,
-        children: [
-          {
-        path: "form",
+      },
+      {
+        path: "notification-template/form",
         element: <Form />,
       },
-        ]
+      {
+        path: "notification-template/view-template",
+        element: <ViewTemplate />,
       },
-      
     ],
   },
   {

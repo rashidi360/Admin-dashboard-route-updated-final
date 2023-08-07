@@ -17,6 +17,7 @@ import {
 // import the custom state which was created separatly.
 import CustomUseState from "./CustemUseState";
 import DeleteAlertDialog from "./DeleteAlertDialog";
+import { Link, Outlet } from "react-router-dom";
 
 const DataFetcher = () => {
   // const [name, setName] = useState("");
@@ -161,13 +162,17 @@ const DataFetcher = () => {
                   <Button onClick={() => handleDelete(item._id)}>
                     <DeleteIcon />
                   </Button>
-                  <Button>
-                    <ViewIcon />
-                  </Button>
+                  <Link to={`view-template`}>
+                    <Button>
+                      <ViewIcon />
+                    </Button>
+                  </Link>
                   <Button onClick={() => handleEdit(item._id)}>
                     <EditIcon />
                   </Button>
                 </Flex>
+                <Outlet />
+
               </Td>
             </Tr>
           )

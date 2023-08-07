@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 import {
   Flex,
@@ -29,6 +30,7 @@ export default function Form() {
   const toast = useToast();
   const [formSubmissionData, setFormSubmissionData] = useState(null);
   const textColor = useColorModeValue("secondaryGray.900", "white");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -78,6 +80,7 @@ export default function Form() {
     // Reload the page after form submission, regardless of success or failure
     setTimeout(() => {
       window.location.reload();
+      navigate(-1);
     }, 2000); // Adjust the delay (in milliseconds) as needed to give the user enough time to see the toast message.
   };
   return (
@@ -87,6 +90,7 @@ export default function Form() {
       px="0px"
       overflowX={{ sm: "scroll", lg: "hidden" }}
       p={10}
+      mt={20}
     >
       <Flex px="25px" justify="space-between" mb="20px" align="center" p={5}>
         <Text

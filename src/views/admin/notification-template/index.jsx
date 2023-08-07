@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Button, Flex, SimpleGrid } from "@chakra-ui/react";
 import Form from './components/Form';
 import DataTable from './components/DataTable';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 
 export default function Notification() {
@@ -13,12 +13,13 @@ export default function Notification() {
       <Button borderRadius={10} my={5} colorScheme={"blackAlpha"} variant="solid" >Create</Button>
       </Link>
       </Flex>
+      <Outlet />
       <SimpleGrid
         mb='20px'
         columns={1}
         spacing={{ base: "20px", xl: "20px" }}>
         <DataTable />
-        <Form/>
+        {/* <Form/> */}
       </SimpleGrid>
     </Box>
       )
