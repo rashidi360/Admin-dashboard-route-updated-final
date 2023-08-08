@@ -167,12 +167,15 @@ const DataFetcher = () => {
                       <ViewIcon />
                     </Button>
                   </Link>
-                  <Button onClick={() => handleEdit(item._id)}>
-                    <EditIcon />
-                  </Button>
+                  <Link to={`update-form`}>
+                    <Button
+                    // onClick={() => handleEdit(item._id)}
+                    >
+                      <EditIcon />
+                    </Button>
+                  </Link>
                 </Flex>
-                <Outlet context={{item}} />
-
+                <Outlet context={{ item }} />
               </Td>
             </Tr>
           )

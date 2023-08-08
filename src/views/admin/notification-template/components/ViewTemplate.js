@@ -6,12 +6,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import DataFetcher from "./DataFetcher";
 import CustomUseState from "./CustemUseState";
+import { get } from 'lodash';
+import { Text } from "@chakra-ui/react";
 
 export default function ViewTemplate(props) {
   const { name, setName, type, setType, template, setTemplate } =
   CustomUseState();
 
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
 
   let { id } = useParams();
   let location = useLocation();
@@ -19,32 +21,49 @@ export default function ViewTemplate(props) {
   console.log(id)
   console.log(location)
 
-  const {item} = useOutletContext();
+  // const {item} = useOutletContext();
 
-  const view = item.find((view) => view.id === id );
+  // const view = item.find((view) => view.id === id );
   
-  if (!view){
-    return "*Id didn't match fo template"
-  }
+  // if (!view){
+  //   return "*Id didn't match fo template"
+  // }
 
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const response = await axios.get("http://localhost:3333/notification");
+  //       const response = await axios.get(`http://localhost:3333/notification/${id}`);
   //       setData(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
+      // } catch (error) {
+      //   console.error("Error fetching data:", error);
   //     }
   //   };
 
   //   fetchData();
   // }, []);
+  // console.log("data: ", data)
+
+  useEffect (() => {
+    axios.get(`http://localhost:3333/notification/${id}`).then(response => {
+      setData(response.data)}
+      ).catch (error =>  {
+        console.error("Error fetching data:", error);});
+  },[id])
+  console.log("datavalue: ", data.name)
 
   // console.warn("props", props.match.params.id);
   return (
-    <Card>
-     <h1>Notification Template</h1>
-     <div>Name: {view.name}</div>
+    <Card mt={20} >
+      <Text>Name</Text>
+    <div>{data.name}</div>
+    <Text>Type</Text>
+    <div>{data.type}</div>
+    <Text>Email</Text>
+    <div>{data.template}</div>
+
+
+    
+
     </Card>
   );
 }
