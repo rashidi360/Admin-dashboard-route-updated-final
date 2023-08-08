@@ -34,6 +34,7 @@ import Test from "views/admin/dataTables/components/Test";
 import Notification from "views/admin/notification-template";
 import Form from "views/admin/notification-template/components/Form";
 import ViewTemplate from "views/admin/notification-template/components/ViewTemplate";
+import UpdateForm from "views/admin/notification-template/components/UpdateForm";
 //--------------------New Version Type1----------------------
 
 const router = createBrowserRouter([
@@ -86,8 +87,12 @@ const router = createBrowserRouter([
         element: <Form />,
       },
       {
-        path: "notification-template/view-template",
+        path: "notification-template/view-template/:id",
         element: <ViewTemplate />,
+      },
+      {
+        path: "notification-template/update-form",
+        element: <UpdateForm />,
       },
     ],
   },

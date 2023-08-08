@@ -162,17 +162,20 @@ const DataFetcher = () => {
                   <Button onClick={() => handleDelete(item._id)}>
                     <DeleteIcon />
                   </Button>
-                  <Link to={`view-template`}>
+                  <Link to={`view-template/${item._id}`}>
                     <Button>
                       <ViewIcon />
                     </Button>
                   </Link>
-                  <Button onClick={() => handleEdit(item._id)}>
-                    <EditIcon />
-                  </Button>
+                  <Link to={`update-form`}>
+                    <Button
+                    // onClick={() => handleEdit(item._id)}
+                    >
+                      <EditIcon />
+                    </Button>
+                  </Link>
                 </Flex>
-                <Outlet />
-
+                <Outlet context={{ item }} />
               </Td>
             </Tr>
           )
