@@ -86,7 +86,7 @@ const router = createBrowserRouter([
         element: <Form />,
       },
       {
-        path: "notification-template/view-template",
+        path: "notification-template/view-template/:id",
         element: <ViewTemplate />,
       },
     ],

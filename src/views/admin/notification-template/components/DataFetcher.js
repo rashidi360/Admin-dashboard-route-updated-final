@@ -162,7 +162,7 @@ const DataFetcher = () => {
                   <Button onClick={() => handleDelete(item._id)}>
                     <DeleteIcon />
                   </Button>
-                  <Link to={`view-template`}>
+                  <Link to={`view-template/${item._id}`}>
                     <Button>
                       <ViewIcon />
                     </Button>
@@ -171,7 +171,7 @@ const DataFetcher = () => {
                     <EditIcon />
                   </Button>
                 </Flex>
-                <Outlet />
+                <Outlet context={{item}} />
 
               </Td>
             </Tr>
