@@ -9,9 +9,12 @@ import { useState } from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import routes from "routes.js";
 
+import { useAuth0 } from "@auth0/auth0-react";
+
 // Custom Chakra theme
 export default function Dashboard(props) {
   const { ...rest } = props;
+
   // states and functions
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -112,6 +115,28 @@ export default function Dashboard(props) {
   document.documentElement.dir = "ltr";
   const { onOpen } = useDisclosure();
   document.documentElement.dir = "ltr";
+
+  const {
+    isAuthenticated,
+    loginWithRedirect,
+    isLoading,
+    getAccessTokenSilently,
+  } = useAuth0();
+
+  if (!isLoading && !isAuthenticated) {
+    getAccessTokenSilently()
+      .then((token) => {
+        console.log(token);
+      })
+      .catch((e) => {
+        loginWithRedirect();
+      });
+  }
+
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+
   return (
     <Box>
       <Box>
@@ -140,7 +165,7 @@ export default function Dashboard(props) {
               <Box>
                 <Navbar
                   onOpen={onOpen}
-                  logoText={"Horizon UI Dashboard PRO"}
+                  logoText={"Umbaratha"}
                   brandText={getActiveRoute(routes)}
                   secondary={getActiveNavbar(routes)}
                   message={getActiveNavbarText(routes)}
@@ -160,14 +185,13 @@ export default function Dashboard(props) {
               >
                 {/* <Routes>
                   {getRoutes(routes)} */}
-                  {/* <Redirect from='/' to='/admin/default' /> old version */}
-                  {/* <Route
+                {/* <Redirect from='/' to='/admin/default' /> old version */}
+                {/* <Route
                     path="/"
                     render={() => <Navigate to="admin/default" />}
                   />
                 </Routes> */}
-                      <Outlet />
-
+                <Outlet />
               </Box>
             ) : null}
             <Box>
