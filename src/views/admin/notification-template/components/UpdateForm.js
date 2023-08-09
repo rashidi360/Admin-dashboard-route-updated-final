@@ -1,8 +1,6 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Flex,
   Text,
@@ -21,21 +19,30 @@ import Card from "components/card/Card";
 import CustomUseState from "./CustemUseState";
 
 export default function UpdateForm() {
-  // const [name, setName] = useState("");
-  // const [type, setType] = useState("");
-  // const [template, setTemplate] = useState("");
-  const { name, setName, type, setType, template, setTemplate } =
-    CustomUseState();
+  const { setTemplate } = CustomUseState();
+  const [data, setData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
-  const [formSubmissionData, setFormSubmissionData] = useState(null);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3333/notification/${id}`)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const statuses = ["success", "error", "warning", "info"];
+
     const toastMessagePopup = (title, description, status) => {
       toast({
         title: title,
@@ -47,35 +54,33 @@ export default function UpdateForm() {
       });
     };
 
-    const teamPayload = {
-      name,
-      type,
-      template,
+    const updatedPayload = {
+      name: data.name,
+      type: data.type,
+      template: data.template,
     };
-    if (name && type && template) {
-      try {
-        setIsSubmitting(true);
-        await axios.post("http://localhost:3333/notification", teamPayload);
-        console.log("Form submitted successfully!");
-        setFormSubmissionData(teamPayload);
-        toastMessagePopup(
-          "Application submitted!",
-          "Thanks for submitting your application. Our team will get back to you soon.",
-          statuses[0]
-        );
-      } catch (error) {
-        console.error("Error:", error);
-        // console.log("Form Submitted Failed inside if");
-      } finally {
-        setIsSubmitting(false);
-      }
-    } else {
-      console.log("Form Submitted Failed!");
+
+    try {
+      setIsSubmitting(true);
+      await axios.patch(
+        `http://localhost:3333/notification/${id}`,
+        updatedPayload
+      );
+      console.log("Form updated successfully!");
       toastMessagePopup(
-        "Application Submission Failed!",
-        "Form Submitted Failed!",
+        "Application updated!",
+        "Your template has been updated successfully.",
+        statuses[0]
+      );
+    } catch (error) {
+      console.error("Error:", error);
+      toastMessagePopup(
+        "Update Failed",
+        "There was an error while updating the template.",
         statuses[1]
       );
+    } finally {
+      setIsSubmitting(false);
     }
     // Reload the page after form submission, regardless of success or failure
     setTimeout(() => {
@@ -83,6 +88,7 @@ export default function UpdateForm() {
       navigate(-1);
     }, 2000); // Adjust the delay (in milliseconds) as needed to give the user enough time to see the toast message.
   };
+
   return (
     <Card
       direction="column"
@@ -99,26 +105,22 @@ export default function UpdateForm() {
           fontWeight="700"
           lineHeight="100%"
         >
-          Notification Template
+          Notification Template, {id}
         </Text>
       </Flex>
-      <form method="POST" onSubmit={handleSubmit}>
-        <FormControl id="first-name" isRequired p={5} isDisabled>
+      <form onSubmit={handleSubmit}>
+        <FormControl id="first-name" p={5}>
           <FormLabel>Name</FormLabel>
           <Input
             placeholder="Name"
-            value={name}
-            onChange={({ target }) => setName(target?.value)}
+            defaultValue={data.name}
+            readOnly
             borderRadius="5px"
           />
         </FormControl>
-        <FormControl id="country" p={5} isDisabled>
+        <FormControl id="country" p={5}>
           <FormLabel>Type</FormLabel>
-          <Select
-            placeholder="Select the Type"
-            value={type}
-            onChange={({ target }) => setType(target?.value)}
-          >
+          <Select placeholder="Select the Type" value={data.type} readOnly>
             <option value="EMAIL">Email</option>
             <option value="SMS">SMS</option>
           </Select>
@@ -128,31 +130,27 @@ export default function UpdateForm() {
             <FormLabel>Enter Your Template</FormLabel>
             <Textarea
               placeholder="Enter the message"
-              value={template}
-              onChange={({ target }) => setTemplate(target?.value)}
-              boxSize={"lg"}
+              value={data.template} // Use value from fetched data
+              onChange={(event) =>
+                setData({ ...data, template: event.target.value })
+              } // Update template in local state
+              boxSize="lg"
               p={5}
-            ></Textarea>
+            />
           </Stack>
         </FormControl>
         <Button
-          onClick={handleSubmit}
+          type="submit"
           colorScheme="blackAlpha"
           variant="solid"
           ml={5}
           pl={5}
           isLoading={isSubmitting}
-          loadingText="Submitting..."
+          loadingText="Updating..."
         >
-          Create
+          Update
         </Button>
       </form>
-      {/* {formSubmissionData && (
-        <AlertPop
-          title="Application submitted!"
-          description="Thanks for submitting your application. Our team will get back to you soon."
-        />
-      )} */}
     </Card>
   );
 }

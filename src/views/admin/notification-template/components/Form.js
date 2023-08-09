@@ -103,7 +103,7 @@ export default function Form() {
         </Text>
       </Flex>
       <form method="POST" onSubmit={handleSubmit}>
-        <FormControl id="first-name" isRequired p={5}>
+        <FormControl id="first-name"  p={5}>
           <FormLabel>Name</FormLabel>
           <Input
             placeholder="Name"
@@ -112,7 +112,7 @@ export default function Form() {
             borderRadius="5px"
           />
         </FormControl>
-        <FormControl id="country" p={5}>
+        <FormControl  p={5}>
           <FormLabel>Type</FormLabel>
           <Select
             placeholder="Select the Type"

@@ -20,6 +20,9 @@ import DeleteAlertDialog from "./DeleteAlertDialog";
 import { Link, Outlet } from "react-router-dom";
 
 const DataFetcher = () => {
+  
+  // State to keep track of the item being deleted
+    const [itemToDelete, setItemToDelete] = useState(null);
   // const [name, setName] = useState("");
   // const [type, setType] = useState("");
   // const [template, setTemplate] = useState("");
@@ -61,7 +64,6 @@ const DataFetcher = () => {
           // Handle success, e.g., display a message or update the state
           console.log("Item deleted successfully:", response.data);
           alert("Template deleted");
-          return <DeleteAlertDialog />;
         })
         .catch((error) => {
           // Handle error, e.g., display an error message
@@ -110,6 +112,26 @@ const DataFetcher = () => {
       })
       .catch((err) => console.log(err));
   };
+
+    
+
+    const handleDeleteClick = (item) => {
+      setItemToDelete(item);
+      onOpen(); // Open the delete confirmation dialog
+    };
+  
+    const handleDeleteConfirm = () => {
+      if (itemToDelete) {
+        handleDelete(itemToDelete._id);
+        setItemToDelete(null);
+        onClose(); // Close the delete confirmation dialog
+      }
+    };
+  
+    const handleDeleteCancel = () => {
+      setItemToDelete(null);
+      onClose(); // Close the delete confirmation dialog
+    };  
 
   return (
     <Table variant="simple">
@@ -160,6 +182,7 @@ const DataFetcher = () => {
               <Td>
                 <Flex>
                   <Button onClick={() => handleDelete(item._id)}>
+                    <DeleteAlertDialog />
                     <DeleteIcon />
                   </Button>
                   <Link to={`view-template/${item._id}`}>
@@ -167,7 +190,7 @@ const DataFetcher = () => {
                       <ViewIcon />
                     </Button>
                   </Link>
-                  <Link to={`update-form`}>
+                  <Link to={`update-form/${item._id}`}>
                     <Button
                     // onClick={() => handleEdit(item._id)}
                     >
@@ -189,6 +212,12 @@ const DataFetcher = () => {
           <Th>View/Edit/Delete</Th>
         </Tr>
       </Tfoot>
+      {/* Delete Confirmation Dialog */}
+      {/* <DeleteAlertDialog
+        isOpen={isOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+      /> */}
     </Table>
 
     /* <Box bg={"tomato"} borderRadius={3} m={5} p={2}>

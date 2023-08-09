@@ -94,6 +94,10 @@ const router = createBrowserRouter([
         path: "notification-template/update-form",
         element: <UpdateForm />,
       },
+      {
+        path: "notification-template/update-form/:id",
+        element: <UpdateForm />,
+      },
     ],
   },
   {
