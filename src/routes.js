@@ -9,6 +9,7 @@ import {
   MdOutlineShoppingCart,
   MdDesignServices,
   MdNotifications,
+  MdOutlinePayment,
 } from "react-icons/md";
 
 // Admin Imports
@@ -76,6 +77,15 @@ const routes = [
     path: "/services",
     icon: (
       <Icon as={MdDesignServices} width="20px" height="20px" color="inherit" />
+    ),
+    // element: <Profile />,
+  },
+  {
+    name: "Payment Option",
+    layout: "/admin",
+    path: "/payment-option",
+    icon: (
+      <Icon as={MdOutlinePayment} width="20px" height="20px" color="inherit" />
     ),
     // element: <Profile />,
   },
