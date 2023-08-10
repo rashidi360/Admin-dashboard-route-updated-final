@@ -105,11 +105,11 @@ export default function UpdateForm() {
           fontWeight="700"
           lineHeight="100%"
         >
-          Notification Template, {id}
+          Notification Template
         </Text>
       </Flex>
       <form onSubmit={handleSubmit}>
-        <FormControl id="first-name" p={5}>
+        <FormControl opacity={"50%"} p={5}>
           <FormLabel>Name</FormLabel>
           <Input
             placeholder="Name"
@@ -118,9 +118,14 @@ export default function UpdateForm() {
             borderRadius="5px"
           />
         </FormControl>
-        <FormControl id="country" p={5}>
+        <FormControl opacity={"50%"} p={5}>
           <FormLabel>Type</FormLabel>
-          <Select placeholder="Select the Type" value={data.type} readOnly>
+          <Select
+            fontWeight={"light"}
+            placeholder="Select the Type"
+            value={data.type}
+            readOnly
+          >
             <option value="EMAIL">Email</option>
             <option value="SMS">SMS</option>
           </Select>

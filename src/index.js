@@ -58,20 +58,20 @@ const router = createBrowserRouter([
         path: "default",
         element: <MainDashboard />,
       },
-      {
-        path: "nft-marketplace",
-        element: <NFTMarketplace />,
-      },
-      {
-        path: "data-tables",
-        element: <DataTables />,
-        children: [
-          {
-            path: "data-tables/test",
-            element: <Test />,
-          },
-        ],
-      },
+      // {
+      //   path: "nft-marketplace",
+      //   element: <NFTMarketplace />,
+      // },
+      // {
+      //   path: "data-tables",
+      //   element: <DataTables />,
+      //   children: [
+      //     {
+      //       path: "data-tables/test",
+      //       element: <Test />,
+      //     },
+      //   ],
+      // },
       {
         path: "profile",
         element: <Profile />,

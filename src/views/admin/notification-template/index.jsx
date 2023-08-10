@@ -18,18 +18,7 @@ export default function Notification() {
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       {/* <AppContext.Provider value={{nameRef, typeRef, templateRef}}> */}
-      <Flex justifyContent={"flex-end"}>
-        <Link to={`form`}>
-          <Button
-            borderRadius={10}
-            my={5}
-            colorScheme={"blackAlpha"}
-            variant="solid"
-          >
-            Create
-          </Button>
-        </Link>
-      </Flex>
+      
       <Outlet />
       <SimpleGrid mb="20px" columns={1} spacing={{ base: "20px", xl: "20px" }}>
         <DataTable />

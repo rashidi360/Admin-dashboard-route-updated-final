@@ -6,13 +6,14 @@ import {
   useNavigate,
   useParams,
   useOutletContext,
+  Link,
 } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import DataFetcher from "./DataFetcher";
 import CustomUseState from "./CustemUseState";
 import { get } from "lodash";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Button, Flex } from "@chakra-ui/react";
 
 export default function ViewTemplate(props) {
   const { name, setName, type, setType, template, setTemplate } =
@@ -76,6 +77,9 @@ export default function ViewTemplate(props) {
         </Text>
         <Text>{data.template}</Text>
       </Box>
+      <Flex justifyContent={"flex-start"} ml={3}>
+      <Button onClick={() => navigate(-1) } colorScheme="blackAlpha" >Back</Button>
+      </Flex>
     </Card>
   );
 }

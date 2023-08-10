@@ -101,6 +101,7 @@ export default function Form() {
         >
           Notification Template
         </Text>
+        
       </Flex>
       <form method="POST" onSubmit={handleSubmit}>
         <FormControl id="first-name"  p={5}>

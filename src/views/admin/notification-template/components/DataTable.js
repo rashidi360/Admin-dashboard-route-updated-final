@@ -2,8 +2,8 @@ import React from "react";
 
 import Card from "components/card/Card";
 
-import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
-
+import { Flex, Text, useColorModeValue, Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import DataFetcher from "./DataFetcher";
 
 export default function DataTable() {
@@ -24,6 +24,18 @@ export default function DataTable() {
         >
           Templates
         </Text>
+        <Flex justifyContent={"flex-end"}>
+        <Link to={`form`}>
+          <Button
+            borderRadius={10}
+            my={5}
+            colorScheme={"blackAlpha"}
+            variant="solid"
+          >
+            Create
+          </Button>
+        </Link>
+      </Flex>
       </Flex>
       {/* calling the DataFetcher component to display the data base.  */}
       <DataFetcher />

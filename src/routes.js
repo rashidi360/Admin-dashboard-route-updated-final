@@ -8,7 +8,7 @@ import {
   MdLock,
   MdOutlineShoppingCart,
   MdDesignServices,
-  MdNotifications
+  MdNotifications,
 } from "react-icons/md";
 
 // Admin Imports
@@ -35,34 +35,34 @@ const routes = [
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     // element: <MainDashboard />,
   },
-  {
-    name: "NFT Marketplace",
-    layout: "/admin",
-    path: "/nft-marketplace",
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width="20px"
-        height="20px"
-        color="inherit"
-      />
-    ),
-    // element: <NFTMarketplace />,
-    secondary: true,
-  },
-  {
-    name: "Data Tables",
-    layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: "/data-tables",
-    // element: <DataTables />,
-    children: [
-      {
-        name: "Test",
-        path: "/Test"
-      }
-    ]
-  },
+  // {
+  //   name: "NFT Marketplace",
+  //   layout: "/admin",
+  //   path: "/nft-marketplace",
+  //   icon: (
+  //     <Icon
+  //       as={MdOutlineShoppingCart}
+  //       width="20px"
+  //       height="20px"
+  //       color="inherit"
+  //     />
+  //   ),
+  //   // element: <NFTMarketplace />,
+  //   secondary: true,
+  // },
+  // {
+  //   name: "Data Tables",
+  //   layout: "/admin",
+  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+  //   path: "/data-tables",
+  //   // element: <DataTables />,
+  //   children: [
+  //     {
+  //       name: "Test",
+  //       path: "/Test"
+  //     }
+  //   ]
+  // },
   {
     name: "Profile",
     layout: "/admin",
@@ -74,15 +74,40 @@ const routes = [
     name: "Services",
     layout: "/admin",
     path: "/services",
-    icon: <Icon as={MdDesignServices} width="20px" height="20px" color="inherit" />,
+    icon: (
+      <Icon as={MdDesignServices} width="20px" height="20px" color="inherit" />
+    ),
     // element: <Profile />,
   },
   {
     name: "Notication Template",
     layout: "/admin",
     path: "/notification-template",
-    icon: <Icon as={MdNotifications} width="20px" height="20px" color="inherit" />,
+    icon: (
+      <Icon as={MdNotifications} width="20px" height="20px" color="inherit" />
+    ),
     // element: <Profile />,
+    children: [
+      {
+        name: "Notification Template Form",
+        layout: "/admin",
+        path: "/form",
+        // element: <Form />,
+      },
+    ]
+  },
+  
+  {
+    path: "notification-template/view-template/:id",
+    // element: <ViewTemplate />,
+  },
+  {
+    path: "notification-template/update-form",
+    // element: <UpdateForm />,
+  },
+  {
+    path: "notification-template/update-form/:id",
+    // element: <UpdateForm />,
   },
   {
     name: "Sign In",
@@ -98,7 +123,6 @@ const routes = [
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     // element: <RTL />,
   },
-  
 ];
 
 export default routes;
