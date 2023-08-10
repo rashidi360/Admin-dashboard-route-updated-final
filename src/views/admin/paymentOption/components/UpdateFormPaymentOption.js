@@ -17,7 +17,7 @@ import {
 
 import Card from "components/card/Card";
 
-export default function UpdateForm() {
+export default function UpdateFormPaymentOption() {
   const [data, setData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
@@ -27,7 +27,7 @@ export default function UpdateForm() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/notification/${id}`)
+      .get(`http://localhost:3333/payment/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -53,17 +53,13 @@ export default function UpdateForm() {
     };
 
     const updatedPayload = {
-      // name: data.name,
-      // type: data.type,
-      template: data.template,
+      name: data.name,
+      description: data.description,
     };
 
     try {
       setIsSubmitting(true);
-      await axios.patch(
-        `http://localhost:3333/notification/${id}`,
-        updatedPayload
-      );
+      await axios.patch(`http://localhost:3333/payment/${id}`, updatedPayload);
       console.log("Form updated successfully!");
       toastMessagePopup(
         "Application updated!",
@@ -103,12 +99,12 @@ export default function UpdateForm() {
           fontWeight="700"
           lineHeight="100%"
         >
-          Notification Template
+          Payment Option
         </Text>
       </Flex>
       <form onSubmit={handleSubmit}>
         <FormControl opacity={"50%"} p={5}>
-          <FormLabel>Name</FormLabel>
+          <FormLabel>Payment Option</FormLabel>
           <Input
             placeholder="Name"
             defaultValue={data.name}
@@ -116,26 +112,14 @@ export default function UpdateForm() {
             borderRadius="5px"
           />
         </FormControl>
-        <FormControl opacity={"50%"} p={5}>
-          <FormLabel>Type</FormLabel>
-          <Select
-            fontWeight={"light"}
-            placeholder="Select the Type"
-            value={data.type}
-            readOnly
-          >
-            <option value="EMAIL">Email</option>
-            <option value="SMS">SMS</option>
-          </Select>
-        </FormControl>
         <FormControl>
           <Stack spacing={3} p={5}>
-            <FormLabel>Enter Your Template</FormLabel>
+            <FormLabel>Enter Your Description</FormLabel>
             <Textarea
-              placeholder="Enter the message"
-              value={data.template} // Use value from fetched data
+              placeholder="Enter the Description"
+              value={data.description} // Use value from fetched data
               onChange={(event) =>
-                setData({ ...data, template: event.target.value })
+                setData({ ...data, description: event.target.value })
               } // Update template in local state
               boxSize="lg"
               p={5}

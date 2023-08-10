@@ -19,7 +19,7 @@ export default function Notification() {
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       {/* <AppContext.Provider value={{nameRef, typeRef, templateRef}}> */}
       
-      <Outlet />
+      {/* <Outlet /> */}
       <SimpleGrid mb="20px" columns={1} spacing={{ base: "20px", xl: "20px" }}>
         <DataTable />
         {/* <Form/> */}

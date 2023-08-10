@@ -35,6 +35,13 @@ import Notification from "views/admin/notification-template";
 import Form from "views/admin/notification-template/components/Form";
 import ViewTemplate from "views/admin/notification-template/components/ViewTemplate";
 import UpdateForm from "views/admin/notification-template/components/UpdateForm";
+import PaymentOption from "views/admin/paymentOption";
+import VeiwPaymentOption from "views/admin/paymentOption/components/VeiwPaymentOption";
+import FormPaymentOption from "views/admin/paymentOption/components/FormPaymentOption";
+import UpdateFormPaymentOption from "views/admin/paymentOption/components/UpdateFormPaymentOption";
+
+
+
 //--------------------New Version Type1----------------------
 
 import { Auth0Provider } from "@auth0/auth0-react";
@@ -79,6 +86,26 @@ const router = createBrowserRouter([
       {
         path: "services",
         element: <Services />,
+      },
+      {
+        path: "payment-option",
+        element: <PaymentOption />,
+      },
+      {
+        path: "payment-option/form",
+        element: <FormPaymentOption />,
+      },
+      {
+        path: "payment-option/view-template/:id",
+        element: <VeiwPaymentOption />,
+      },
+      {
+        path: "payment-option/update-form",
+        element: <UpdateFormPaymentOption />,
+      },
+      {
+        path: "payment-option/update-form/:id",
+        element: <UpdateFormPaymentOption />,
       },
       {
         path: "notification-template",
