@@ -21,8 +21,6 @@ import {
   FormLabel,
   Input,
   Select,
-  Stack,
-  Textarea,
   Button,
   useToast,
   useColorModeValue,
@@ -33,10 +31,10 @@ import Card from "components/card/Card";
 
 export default function FormCoupon() {
   const [name, setName] = useState("");
-  const [discountType, setDiscountType] = useState("");
+  // const [discountType, setDiscountType] = useState("");
   const [amount, setAmount] = useState("");
   const [validThrough, setValidThrough] = useState("");
-  const [usedOn, setUsedOn] = useState("");
+  // const [usedOn, setUsedOn] = useState("");
   const [maxDiscount, setMaxDiscount] = useState("");
   const [numberOfCoupons, setNumberOfCoupons] = useState(1);
 
@@ -48,7 +46,6 @@ export default function FormCoupon() {
 
   //-------------------Discount type dropdown------------------------
   const [selectedOption, setSelectedOption] = useState("FIXED");
-  const [inputValue, setInputValue] = useState("");
 
   // -------------------------Combined onChange Dropdown------------
   const combinedOnChange = (event) => {
@@ -59,9 +56,8 @@ export default function FormCoupon() {
   // -------------------Coupon code switch----------------------------
   const [couponCodeEnabled, setCouponCodeEnabled] = useState(false);
 
-
   // ---------------Refresh------------------------------------------
-  // Reload the page after form submission, regardless of success or failure
+  // Reload the page after form submission
   const reloadAndNavigate = () => {
     window.location.reload();
     navigate(-1); // Make sure you have 'navigate' function available
@@ -97,36 +93,35 @@ export default function FormCoupon() {
         name: name,
         amount: amount,
         validThrough: validThrough,
-        // usedOn,
         maxDiscount: maxDiscount,
         discountType: selectedOption,
       },
     };
     if (name.length === 8 || couponCodeEnabled) {
-    try {
-      setIsSubmitting(true);
-      await axios.post("http://localhost:3333/coupon", teamPayload);
-      console.log("Form submitted successfully!");
-      setFormSubmissionData(teamPayload);
-      toastMessagePopup(
-        "Application submitted!",
-        "Thanks for submitting your application. Our team will get back to you soon.",
-        statuses[0]
-      );
-      setTimeout(reloadAndNavigate, 2000)
-    } catch (error) {
-      console.error("Error:", error);
-      // console.log("Form Submitted Failed inside if");
-    } finally {
-      setIsSubmitting(false);
-    }
+      try {
+        setIsSubmitting(true);
+        await axios.post("http://localhost:3333/coupon", teamPayload);
+        console.log("Form submitted successfully!");
+        setFormSubmissionData(teamPayload);
+        toastMessagePopup(
+          "Application submitted!",
+          "Thanks for submitting your application. Our team will get back to you soon.",
+          statuses[0]
+        );
+        setTimeout(reloadAndNavigate, 2000);
+      } catch (error) {
+        console.error("Error:", error);
+        // console.log("Form Submitted Failed inside if");
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
-    console.log("Form Submitted Failed!");
-    toastMessagePopup(
-      "Application Submission Failed!",
-      "Form Submitted Failed!",
-      statuses[1]
-    );
+      console.log("Form Submitted Failed!");
+      toastMessagePopup(
+        "Application Submission Failed!",
+        "Form Submitted Failed!",
+        statuses[1]
+      );
     }
   };
   return (
@@ -173,16 +168,18 @@ export default function FormCoupon() {
               onChange={() => setCouponCodeEnabled(!couponCodeEnabled)}
             />
           </FormControl>
-          {name.length !== 8 && <Text hidden={couponCodeEnabled} color="red">Please enter exactly 8 characters.</Text>}
+          {name.length !== 8 && (
+            <Text hidden={couponCodeEnabled} color="red">
+              Please enter exactly 8 characters.
+            </Text>
+          )}
         </FormControl>
 
         <FormControl p={5}>
           <FormLabel>Number of Counpons</FormLabel>
           <NumberInput
             value={numberOfCoupons}
-            // onChange={({ target }) => setNumberOfCoupons(target?.value)}
             onChange={({ target }) => setNumberOfCoupons(target?.value)}
-            // defaultValue={1}
             max={30}
             clampValueOnBlur={false}
             width={"64"}
@@ -194,24 +191,11 @@ export default function FormCoupon() {
             </NumberInputStepper>
           </NumberInput>
         </FormControl>
-        {/* <FormControl p={5}>
-          <FormLabel>Discount Type</FormLabel>
-          <Select
-            placeholder="Select the Type"
-            value={discountType}
-            onChange={({ target }) => setDiscountType(target?.value)}
-            width={"64"}
-          >
-            <option value="PERCENT">Percentage</option>
-            <option value="FIXED">Fixed</option>
-          </Select>
-        </FormControl> */}
 
         <FormControl p={5}>
           <FormLabel>Discount Type</FormLabel>
           <Select
             value={selectedOption}
-            // defaultValue={selectedOption}
             onChange={combinedOnChange}
             width={"64"}
           >

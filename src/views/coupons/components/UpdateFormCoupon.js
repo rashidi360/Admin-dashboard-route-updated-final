@@ -2,25 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-} from "@chakra-ui/react";
-import {
   Flex,
   Text,
   FormControl,
   FormLabel,
   Input,
   Select,
-  Stack,
-  Textarea,
   Button,
   useToast,
   useColorModeValue,
-  Switch,
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
@@ -35,6 +25,13 @@ export default function UpdateFormCoupon() {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
   const { id } = useParams();
+
+  // ---------------Refresh------------------------------------------
+  // Reload the page after form submission
+  const reloadAndNavigate = () => {
+    window.location.reload();
+    navigate(-1); // Make sure you have 'navigate' function available
+  };
 
   useEffect(() => {
     axios
@@ -78,7 +75,6 @@ export default function UpdateFormCoupon() {
       // discountType: data.discountType,
       amount: data.amount,
       validThrough: data.validThrough,
-      // usedOn: data.usedOn,
       maxDiscount: data.maxDiscount,
     };
 
@@ -91,6 +87,7 @@ export default function UpdateFormCoupon() {
         "Your template has been updated successfully.",
         statuses[0]
       );
+      setTimeout(reloadAndNavigate, 2000);
     } catch (error) {
       console.error("Error:", error);
       toastMessagePopup(
@@ -101,11 +98,6 @@ export default function UpdateFormCoupon() {
     } finally {
       setIsSubmitting(false);
     }
-    // Reload the page after form submission, regardless of success or failure
-    setTimeout(() => {
-      window.location.reload();
-      navigate(-1);
-    }, 2000); // Adjust the delay (in milliseconds) as needed to give the user enough time to see the toast message.
   };
 
   return (
@@ -138,7 +130,6 @@ export default function UpdateFormCoupon() {
                 value={data.name}
                 borderRadius="5px"
                 width={"64"}
-                // disabled={couponCodeEnabled}
                 minLength={8}
                 readOnly
               />
@@ -146,27 +137,9 @@ export default function UpdateFormCoupon() {
           </FormControl>
         </FormControl>
 
-        {/* <FormControl p={5}>
-          <FormLabel>Discount Type</FormLabel>
-          <Select
-            placeholder="Select the Type"
-            value={discountType}
-            onChange={({ target }) => setDiscountType(target?.value)}
-            width={"64"}
-          >
-            <option value="PERCENT">Percentage</option>
-            <option value="FIXED">Fixed</option>
-          </Select>
-        </FormControl> */}
-
         <FormControl p={5}>
           <FormLabel>Discount Type</FormLabel>
-          <Select
-            value={data.discountType}
-            // onChange={handleOptionChange}
-            width={"64"}
-            isReadOnly
-          >
+          <Select value={data.discountType} width={"64"} isReadOnly>
             <option value="FIXED">Fixed</option>
             <option value="PERCENT">Percentage</option>
           </Select>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, Flex, Button, useToast } from "@chakra-ui/react";
-import Card from "components/card/Card";
+import { Flex, Button } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Table,
@@ -22,18 +21,10 @@ import { Link, Outlet } from "react-router-dom";
 const APIData = () => {
   // State to keep track of the item being deleted
   const [itemToDelete, setItemToDelete] = useState(null);
-  // const [name, setName] = useState("");
-  // const [type, setType] = useState("");
-  // const [template, setTemplate] = useState("");
-  
+
   const [data, setData] = useState(null);
-  const [uname, usetName] = useState("");
-  const [utype, usetType] = useState("");
-  const [utemplate, usetTemplate] = useState("");
-  const [editId, setEditId] = useState(-1);
-  const [deleteId, setDeleteId] = useState(-1);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [showPopup, setShowPopup] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -48,11 +39,10 @@ const APIData = () => {
   }, []);
 
   if (!data) {
-    return <Text p={10} >Loading...</Text>;
+    return <Text p={10}>Loading...</Text>;
   }
 
   const handleDelete = (itemId) => {
-    setShowPopup(true);
     setItemToDelete(itemId);
     onOpen();
   };
@@ -79,7 +69,6 @@ const APIData = () => {
     setItemToDelete(null);
     onClose();
   };
-
 
   return (
     <Table variant="simple">
@@ -116,21 +105,19 @@ const APIData = () => {
                   </Button>
                 </Link>
                 <Link to={`update-form/${item._id}`}>
-                  <Button
-                  // onClick={() => handleEdit(item._id)}
-                  >
+                  <Button>
                     <EditIcon />
                   </Button>
                 </Link>
               </Flex>
-              <Outlet context={{ item }} />
+              {/* <Outlet context={{ item }} /> */}
             </Td>
           </Tr>
         ))}
       </Tbody>
       <Tfoot>
         <Tr>
-        <Th>Coupon Code</Th>
+          <Th>Coupon Code</Th>
           <Th>Discount Type</Th>
           <Th>Discount Amount</Th>
           <Th>Maximum Discount</Th>

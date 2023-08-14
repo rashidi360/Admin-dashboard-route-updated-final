@@ -25,20 +25,19 @@ export default function DataTableCoupon() {
           Templates
         </Text>
         <Flex justifyContent={"flex-end"}>
-        <Link to={`form`}>
-          <Button
-            borderRadius={10}
-            my={5}
-            colorScheme={"blackAlpha"}
-            variant="solid"
-          >
-            Create
-          </Button>
-        </Link>
+          <Link to={`form`}>
+            <Button
+              borderRadius={10}
+              my={5}
+              colorScheme={"blackAlpha"}
+              variant="solid"
+            >
+              Create
+            </Button>
+          </Link>
+        </Flex>
       </Flex>
-      </Flex>
-      {/* calling the DataFetcher component to display the data base.  */}
-    <APIData />
+      <APIData />
     </Card>
   );
 }

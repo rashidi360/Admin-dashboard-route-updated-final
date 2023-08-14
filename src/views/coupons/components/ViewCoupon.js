@@ -1,48 +1,17 @@
 import Card from "components/card/Card";
 import React from "react";
 import axios from "axios";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useOutletContext,
-  Link,
-} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
-import { get } from "lodash";
 import { Box, Text, Button, Flex } from "@chakra-ui/react";
 
 export default function ViewCoupon() {
   const [data, setData] = useState({});
 
   let { id } = useParams();
-  let location = useLocation();
   let navigate = useNavigate();
-  console.log(id);
-  console.log(location);
-
-  // const {item} = useOutletContext();
-
-  // const view = item.find((view) => view.id === id );
-
-  // if (!view){
-  //   return "*Id didn't match fo template"
-  // }
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:3333/notification/${id}`);
-  //       setData(response.data);
-  // } catch (error) {
-  //   console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-  // console.log("data: ", data)
+  // console.log(id);
 
   useEffect(() => {
     axios
@@ -73,12 +42,10 @@ export default function ViewCoupon() {
         <Text>{data.amount}</Text>
         {data.discountType === "PERCENT" ? (
           <>
-          <Text fontSize={"20px"} fontWeight={"bold"}>
+            <Text fontSize={"20px"} fontWeight={"bold"}>
               Max Discount
             </Text>
-          <Text>
-            {data.maxDiscount}
-          </Text>
+            <Text>{data.maxDiscount}</Text>
           </>
         ) : (
           <></>
