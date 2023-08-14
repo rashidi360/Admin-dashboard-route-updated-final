@@ -10,7 +10,10 @@ import {
   MdDesignServices,
   MdNotifications,
   MdOutlinePayment,
+  
 } from "react-icons/md";
+
+import { RiCoupon3Line } from "react-icons/ri";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
@@ -90,12 +93,22 @@ const routes = [
     // element: <Profile />,
   },
   {
-    name: "Notication Template",
+    name: "Coupon",
+    layout: "/admin",
+    path: "/coupon",
+    icon: (
+      <Icon as={RiCoupon3Line} width="20px" height="20px" color="inherit" />
+    ),
+    // element: <Profile />,
+  },
+  {
+    name: "Notification Template",
     layout: "/admin",
     path: "/notification-template",
     icon: (
       <Icon as={MdNotifications} width="20px" height="20px" color="inherit" />
     ),
+    id: "notification",
     // element: <Profile />,
     children: [
       {

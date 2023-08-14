@@ -39,7 +39,10 @@ import PaymentOption from "views/admin/paymentOption";
 import VeiwPaymentOption from "views/admin/paymentOption/components/VeiwPaymentOption";
 import FormPaymentOption from "views/admin/paymentOption/components/FormPaymentOption";
 import UpdateFormPaymentOption from "views/admin/paymentOption/components/UpdateFormPaymentOption";
-
+import Coupons from "views/coupons";
+import ViewCoupon from "views/coupons/components/ViewCoupon";
+import FormCoupon from "views/coupons/components/FormCoupon";
+import UpdateFormCoupon from "views/coupons/components/UpdateFormCoupon";
 
 
 //--------------------New Version Type1----------------------
@@ -106,6 +109,26 @@ const router = createBrowserRouter([
       {
         path: "payment-option/update-form/:id",
         element: <UpdateFormPaymentOption />,
+      },
+      {
+        path: "coupon",
+        element: <Coupons />,
+      },
+      {
+        path: "coupon/form",
+        element: <FormCoupon />,
+      },
+      {
+        path: "coupon/view-template/:id",
+        element: <ViewCoupon />,
+      },
+      {
+        path: "coupon/update-form",
+        element: <UpdateFormCoupon />,
+      },
+      {
+        path: "coupon/update-form/:id",
+        element: <UpdateFormCoupon />,
       },
       {
         path: "notification-template",
