@@ -10,6 +10,7 @@ import {
   MdDesignServices,
   MdNotifications,
   MdOutlinePayment,
+  MdLocationOn,
   
 } from "react-icons/md";
 
@@ -98,6 +99,15 @@ const routes = [
     path: "/coupon",
     icon: (
       <Icon as={RiCoupon3Line} width="20px" height="20px" color="inherit" />
+    ),
+    // element: <Profile />,
+  },
+  {
+    name: "Location",
+    layout: "/admin",
+    path: "/location",
+    icon: (
+      <Icon as={MdLocationOn} width="20px" height="20px" color="inherit" />
     ),
     // element: <Profile />,
   },

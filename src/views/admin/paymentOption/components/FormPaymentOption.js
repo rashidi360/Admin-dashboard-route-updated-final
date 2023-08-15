@@ -29,6 +29,11 @@ export default function FormPaymentOption() {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
 
+  const reloadAndNavigate = () => {
+    window.location.reload();
+    navigate(-1); // Make sure you have 'navigate' function available
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -59,6 +64,7 @@ export default function FormPaymentOption() {
           "Payment Option Submitted Succesfully.",
           statuses[0]
         );
+        setTimeout(reloadAndNavigate, 2000)
       } catch (error) {
         console.error("Error:", error);
         // console.log("Form Submitted Failed inside if");
@@ -73,11 +79,6 @@ export default function FormPaymentOption() {
         statuses[1]
       );
     }
-    // Reload the page after form submission, regardless of success or failure
-    setTimeout(() => {
-      window.location.reload();
-      navigate(-1);
-    }, 2000); // Adjust the delay (in milliseconds) as needed to give the user enough time to see the toast message.
   };
   return (
     <Card

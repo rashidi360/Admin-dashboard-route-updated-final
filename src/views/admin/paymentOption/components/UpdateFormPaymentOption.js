@@ -7,7 +7,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Select,
   Stack,
   Textarea,
   Button,
@@ -24,6 +23,11 @@ export default function UpdateFormPaymentOption() {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const reloadAndNavigate = () => {
+    window.location.reload();
+    navigate(-1); // Make sure you have 'navigate' function available
+  };
 
   useEffect(() => {
     axios
@@ -66,6 +70,7 @@ export default function UpdateFormPaymentOption() {
         "Your template has been updated successfully.",
         statuses[0]
       );
+      setTimeout(reloadAndNavigate, 2000);
     } catch (error) {
       console.error("Error:", error);
       toastMessagePopup(
@@ -76,11 +81,6 @@ export default function UpdateFormPaymentOption() {
     } finally {
       setIsSubmitting(false);
     }
-    // Reload the page after form submission, regardless of success or failure
-    setTimeout(() => {
-      window.location.reload();
-      navigate(-1);
-    }, 2000); // Adjust the delay (in milliseconds) as needed to give the user enough time to see the toast message.
   };
 
   return (

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, Flex, Button, useToast } from "@chakra-ui/react";
-import Card from "components/card/Card";
+import { Flex, Button } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Table,
@@ -16,20 +15,14 @@ import {
   Text,
 } from "@chakra-ui/react";
 // import the custom state which was created separatly.
-import DeleteAlertDialog from "./DeleteAlertDialog";
+import DeleteAlertDialog from "components/deleteConfirmationAlert/DeleteAlertDialog";
 import { Link, Outlet } from "react-router-dom";
 
 const APIData = () => {
   // State to keep track of the item being deleted
   const [itemToDelete, setItemToDelete] = useState(null);
   const [data, setData] = useState(null);
-  const [uname, usetName] = useState("");
-  const [utype, usetType] = useState("");
-  const [utemplate, usetTemplate] = useState("");
-  const [editId, setEditId] = useState(-1);
-  const [deleteId, setDeleteId] = useState(-1);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [showPopup, setShowPopup] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -47,54 +40,7 @@ const APIData = () => {
     return <Text p={10}>Loading...</Text>;
   }
 
-  // const handleDelete = (deleteId) => {
-
-  //   let confirmationMessage = prompt("Please enter 'delete' to confirm delete");
-  //   if (confirmationMessage === "delete") {
-  //     // Make a DELETE request using Axios
-  //     axios
-  //       .delete(`http://localhost:3333/notification/${deleteId}`)
-  //       .then((response) => {
-  //         // Handle success, e.g., display a message or update the state
-  //         console.log("Item deleted successfully:", response.data);
-  //         alert("Template deleted");
-  //       })
-  //       .catch((error) => {
-  //         // Handle error, e.g., display an error message
-  //         console.error("Error deleting item:", error);
-  //         alert("Template not deleted");
-  //       });
-  //     // refreshing the page after deleting
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 2000);
-  //   } else {
-  //     alert("Template delete failed");
-  //   }
-  // };
-
-  // const handleDeleteClick = (item) => {
-  //   setItemToDelete(item);
-  //   onOpen(); // Open the delete confirmation dialog
-  // };
-
-  // const handleDeleteConfirm = () => {
-  //   if (itemToDelete) {
-  //     handleDelete(itemToDelete._id);
-  //     setItemToDelete(null);
-  //     onClose(); // Close the delete confirmation dialog
-  //   }
-  // };
-
-  // const handleDeleteCancel = () => {
-  //   setItemToDelete(null);
-  //   onClose(); // Close the delete confirmation dialog
-  // };
-
-  // -----------------------------------------------------------
-
   const handleDelete = (itemId) => {
-    setShowPopup(true);
     setItemToDelete(itemId);
     onOpen();
   };
@@ -149,9 +95,7 @@ const APIData = () => {
                   </Button>
                 </Link>
                 <Link to={`update-form/${item._id}`}>
-                  <Button
-                  // onClick={() => handleEdit(item._id)}
-                  >
+                  <Button>
                     <EditIcon />
                   </Button>
                 </Link>

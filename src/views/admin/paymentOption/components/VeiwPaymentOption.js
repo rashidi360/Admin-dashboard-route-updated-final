@@ -1,28 +1,17 @@
 import Card from "components/card/Card";
 import React from "react";
 import axios from "axios";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useOutletContext,
-  Link,
-} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
-
-import { get } from "lodash";
 import { Box, Text, Button, Flex } from "@chakra-ui/react";
 
 export default function VeiwPaymentOption() {
-
   const [data, setData] = useState({});
 
   let { id } = useParams();
-  let location = useLocation();
   let navigate = useNavigate();
-  console.log(id);
-  console.log(location);
+  // console.log(id);
 
   useEffect(() => {
     axios
@@ -43,14 +32,15 @@ export default function VeiwPaymentOption() {
           Name
         </Text>
         <Text>{data.name}</Text>
-        
         <Text fontSize={"20px"} fontWeight={"bold"}>
           Description
         </Text>
         <Text>{data.description}</Text>
       </Box>
       <Flex justifyContent={"flex-start"} ml={3}>
-      <Button onClick={() => navigate(-1) } colorScheme="blackAlpha" >Back</Button>
+        <Button onClick={() => navigate(-1)} colorScheme="blackAlpha">
+          Back
+        </Button>
       </Flex>
     </Card>
   );

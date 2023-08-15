@@ -12,8 +12,9 @@ import {
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
+  InputRightElement,
 } from "@chakra-ui/react";
-
+import { CloseIcon } from "@chakra-ui/icons";
 import {
   Flex,
   Text,
@@ -55,7 +56,10 @@ export default function FormCoupon() {
   console.log("numberOfCoupons", numberOfCoupons);
   // -------------------Coupon code switch----------------------------
   const [couponCodeEnabled, setCouponCodeEnabled] = useState(false);
-
+  const autoGenarateOn = () => {
+    setCouponCodeEnabled(!couponCodeEnabled);
+    setName("");
+  };
   // ---------------Refresh------------------------------------------
   // Reload the page after form submission
   const reloadAndNavigate = () => {
@@ -64,7 +68,7 @@ export default function FormCoupon() {
   };
 
   const handleSubmit = async (event) => {
-    console.log("select", numberOfCoupons);
+    console.log("numberOfCoupons", numberOfCoupons);
 
     event.preventDefault();
 
@@ -87,7 +91,7 @@ export default function FormCoupon() {
 
     // }}
     const teamPayload = {
-      numberOfCoupons: "1",
+      numberOfCoupons: numberOfCoupons,
 
       couponDetails: {
         name: name,
@@ -156,7 +160,6 @@ export default function FormCoupon() {
                 borderRadius="5px"
                 width={"64"}
                 disabled={couponCodeEnabled}
-                minLength={8}
               />
             </Flex>
             <FormLabel htmlFor="coupon-code-disable" mb="0">
@@ -165,7 +168,8 @@ export default function FormCoupon() {
             <Switch
               id="coupon-code-disable"
               colorScheme="blackAlpha"
-              onChange={() => setCouponCodeEnabled(!couponCodeEnabled)}
+              // onChange={() => setCouponCodeEnabled(!couponCodeEnabled)}
+              onChange={autoGenarateOn}
             />
           </FormControl>
           {name.length !== 8 && (
@@ -243,6 +247,16 @@ export default function FormCoupon() {
                 borderRadius="5px"
                 htmlSize={25}
                 width="auto"
+              />
+              <InputRightAddon
+                children={
+                  <CloseIcon
+                    onClick={() => {
+                      setAmount("");
+                    }}
+                    color="red.500"
+                  />
+                }
               />
             </InputGroup>
           )}

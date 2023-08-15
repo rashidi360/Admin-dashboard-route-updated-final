@@ -39,10 +39,11 @@ import PaymentOption from "views/admin/paymentOption";
 import VeiwPaymentOption from "views/admin/paymentOption/components/VeiwPaymentOption";
 import FormPaymentOption from "views/admin/paymentOption/components/FormPaymentOption";
 import UpdateFormPaymentOption from "views/admin/paymentOption/components/UpdateFormPaymentOption";
-import Coupons from "views/coupons";
-import ViewCoupon from "views/coupons/components/ViewCoupon";
-import FormCoupon from "views/coupons/components/FormCoupon";
-import UpdateFormCoupon from "views/coupons/components/UpdateFormCoupon";
+import Coupons from "views/admin/coupons";
+import ViewCoupon from "views/admin/coupons/components/ViewCoupon";
+import FormCoupon from "views/admin/coupons/components/FormCoupon";
+import UpdateFormCoupon from "views/admin/coupons/components/UpdateFormCoupon";
+import Location from "views/admin/location";
 
 
 //--------------------New Version Type1----------------------
@@ -110,6 +111,26 @@ const router = createBrowserRouter([
         path: "payment-option/update-form/:id",
         element: <UpdateFormPaymentOption />,
       },
+      {
+        path: "location",
+        element: <Location />,
+      },
+      // {
+      //   path: "location/form",
+      //   element: <FormLocation />,
+      // },
+      // {
+      //   path: "location/view-template/:id",
+      //   element: <VeiwLocation />,
+      // },
+      // {
+      //   path: "location/update-form",
+      //   element: <UpdateFormLocation />,
+      // },
+      // {
+      //   path: "location/update-form/:id",
+      //   element: <UpdateFormLocation />,
+      // },
       {
         path: "coupon",
         element: <Coupons />,

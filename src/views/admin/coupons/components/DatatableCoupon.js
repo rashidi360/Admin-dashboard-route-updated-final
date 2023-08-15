@@ -4,8 +4,10 @@ import Card from "components/card/Card";
 
 import { Flex, Text, useColorModeValue, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+//Pages
 import APIData from "./APIData";
-export default function DataTable() {
+
+export default function DataTableCoupon() {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
     <Card
@@ -21,22 +23,21 @@ export default function DataTable() {
           fontWeight="700"
           lineHeight="100%"
         >
-          Payment Option
+          Coupon Code
         </Text>
         <Flex justifyContent={"flex-end"}>
-        <Link to={`form`}>
-          <Button
-            borderRadius={10}
-            my={5}
-            colorScheme={"blackAlpha"}
-            variant="solid"
-          >
-            Create
-          </Button>
-        </Link>
+          <Link to={`form`}>
+            <Button
+              borderRadius={10}
+              my={5}
+              colorScheme={"blackAlpha"}
+              variant="solid"
+            >
+              Create
+            </Button>
+          </Link>
+        </Flex>
       </Flex>
-      </Flex>
-      {/* calling the DataFetcher component to display the data base.  */}
       <APIData />
     </Card>
   );

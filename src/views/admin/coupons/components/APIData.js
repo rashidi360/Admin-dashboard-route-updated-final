@@ -14,7 +14,7 @@ import {
   useDisclosure,
   Text,
 } from "@chakra-ui/react";
-// import the custom state which was created separatly.
+// import the custom component which was created separatly.
 import DeleteAlertDialog from "components/deleteConfirmationAlert/DeleteAlertDialog";
 import { Link, Outlet } from "react-router-dom";
 
