@@ -44,6 +44,8 @@ import ViewCoupon from "views/admin/coupons/components/ViewCoupon";
 import FormCoupon from "views/admin/coupons/components/FormCoupon";
 import UpdateFormCoupon from "views/admin/coupons/components/UpdateFormCoupon";
 import Location from "views/admin/location";
+import Counsellor from "views/admin/counsellor";
+import Rates from "views/admin/counsellor/rates";
 
 
 //--------------------New Version Type1----------------------
@@ -147,6 +149,30 @@ const router = createBrowserRouter([
         path: "coupon/update-form",
         element: <UpdateFormCoupon />,
       },
+      {
+        path: "counsellor",
+        element: <Counsellor />,
+      },
+      {
+        path: "counsellor/rates",
+        element: <Rates />,
+      },
+      // {
+      //   path: "location/form",
+      //   element: <FormLocation />,
+      // },
+      // {
+      //   path: "location/view-template/:id",
+      //   element: <VeiwLocation />,
+      // },
+      // {
+      //   path: "location/update-form",
+      //   element: <UpdateFormLocation />,
+      // },
+      // {
+      //   path: "location/update-form/:id",
+      //   element: <UpdateFormLocation />,
+      // },
       {
         path: "coupon/update-form/:id",
         element: <UpdateFormCoupon />,
