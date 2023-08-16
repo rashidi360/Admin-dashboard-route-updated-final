@@ -12,7 +12,10 @@ import {
   MdOutlinePayment,
   MdLocationOn,
   
+  
 } from "react-icons/md";
+
+import { ImProfile } from "react-icons/im";
 
 import { RiCoupon3Line } from "react-icons/ri";
 
@@ -99,6 +102,15 @@ const routes = [
     path: "/coupon",
     icon: (
       <Icon as={RiCoupon3Line} width="20px" height="20px" color="inherit" />
+    ),
+    // element: <Profile />,
+  },
+  {
+    name: "Counsellor",
+    layout: "/admin",
+    path: "/counsellor",
+    icon: (
+      <Icon as={ImProfile} width="20px" height="20px" color="inherit" />
     ),
     // element: <Profile />,
   },

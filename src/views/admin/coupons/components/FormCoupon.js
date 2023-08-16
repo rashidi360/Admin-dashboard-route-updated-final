@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import 'assets/css/CustomStyleDatePicker.css'
+
 import {
   NumberInput,
   NumberInputField,
@@ -13,6 +15,7 @@ import {
   InputLeftAddon,
   InputRightAddon,
   InputRightElement,
+  Box,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import {
@@ -26,15 +29,24 @@ import {
   useToast,
   useColorModeValue,
   Switch,
+  CSSReset
 } from "@chakra-ui/react";
+// Date Picker
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+// ReactInputMask
+import ReactInputMask from "react-input-mask";
+// CurrencyFormat
+import CurrencyFormat from "react-currency-format";
 
 import Card from "components/card/Card";
+import { blacken } from "@chakra-ui/theme-tools";
 
 export default function FormCoupon() {
   const [name, setName] = useState("");
   // const [discountType, setDiscountType] = useState("");
   const [amount, setAmount] = useState("");
-  const [validThrough, setValidThrough] = useState("");
+  const [validThrough, setValidThrough] = useState(new Date());
   // const [usedOn, setUsedOn] = useState("");
   const [maxDiscount, setMaxDiscount] = useState("");
   const [numberOfCoupons, setNumberOfCoupons] = useState(1);
@@ -183,7 +195,7 @@ export default function FormCoupon() {
           <FormLabel>Number of Counpons</FormLabel>
           <NumberInput
             value={numberOfCoupons}
-            onChange={({ target }) => setNumberOfCoupons(target?.value)}
+            onChange={(target) => setNumberOfCoupons(target)}
             max={30}
             clampValueOnBlur={false}
             width={"64"}
@@ -217,61 +229,81 @@ export default function FormCoupon() {
                   type="number"
                   value={maxDiscount}
                   placeholder="Enter percentage"
-                  onChange={({ target }) => setMaxDiscount(target?.value)}
+                  onChange={({ target }) => setMaxDiscount(target?.value.slice(0,2))}
                   htmlSize={25}
                   width="auto"
                 />
                 <InputRightAddon children="%" />
               </InputGroup>
-              <InputGroup pt={5}>
+              {/* <InputGroup pt={5}>
                 <InputLeftAddon children="LKR" />
-                <Input
-                  type="number"
+                <Flex pl={2} border="1px solid #e2e8f0" borderRadius="5px" width="52">
+                <CurrencyFormat 
+                  thousandSeparator={true}
+                  // prefix="LKR"
+                  suffix=".00"
+                  displayType="input"
                   value={amount}
+                  maxLength={13}
                   placeholder="Enter the Amount"
-                  onChange={({ target }) => setAmount(target?.value)}
-                  borderRadius="5px"
-                  htmlSize={25}
-                  width="auto"
+                  onChange={({ target }) =>
+                    setAmount(target?.value.replace(/,/g, ""))
+                  }
+                  style={{ outline: 'none' }} // Remove focus outline
+                  // width="52"
                 />
-              </InputGroup>
+                </Flex>
+              </InputGroup> */}
             </>
           ) : (
             <InputGroup>
               <InputLeftAddon children="LKR" />
-              <Input
-                type="number"
-                value={amount}
-                placeholder="Enter the Amount"
-                onChange={({ target }) => setAmount(target?.value)}
-                borderRadius="5px"
-                htmlSize={25}
-                width="auto"
-              />
-              <InputRightAddon
-                children={
-                  <CloseIcon
-                    onClick={() => {
-                      setAmount("");
-                    }}
-                    color="red.500"
-                  />
-                }
-              />
+              <Flex pl={2} border="1px solid #e2e8f0" borderRadius="5px" width="52">
+                <CurrencyFormat 
+                  thousandSeparator={true}
+                  // prefix="LKR"
+                  suffix=".00"
+                  displayType="input"
+                  value={amount}
+                  maxLength={13}
+                  placeholder="Enter the Amount"
+                  onChange={({ target }) =>
+                    setAmount(target?.value.replace(/,/g, ""))
+                  }
+                  style={{ outline: 'none' }} // Remove focus outline
+                  // width="52"
+                />
+                </Flex>
             </InputGroup>
           )}
         </FormControl>
         <FormControl id="first-name" p={5}>
           <FormLabel>Valid Through</FormLabel>
-          <Input
-            placeholder="Valid Through"
+          <InputGroup>
+            {/* <Input
+            placeholder={date}
             value={validThrough}
             onChange={({ target }) =>
               setValidThrough(target?.value, toString())
             }
             borderRadius="5px"
             width={"64"}
-          />
+          /> */}
+            <Flex p={2} border="1px solid #e2e8f0" borderRadius="5px" width="64">
+              <ReactDatePicker
+                showTimeSelect
+                // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
+                minTime={new Date(0, 0, 0, 8, 30)}
+                maxTime={new Date(0, 0, 0, 17, 0)}
+                selected={validThrough}
+                onChange={(date) => setValidThrough(date)}
+                dateFormat="dd/MM/yyyy h:mm aa"
+                timeFormat="HH:mm"
+                className="custom-react-datepicker"
+                
+              />
+            </Flex>
+          </InputGroup>
         </FormControl>
         <Button
           onClick={handleSubmit}

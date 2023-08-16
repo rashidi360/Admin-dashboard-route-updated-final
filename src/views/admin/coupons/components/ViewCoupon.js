@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Box, Text, Button, Flex } from "@chakra-ui/react";
+// CurrencyFormat
+import CurrencyFormat from "react-currency-format";
 
 export default function ViewCoupon() {
   const [data, setData] = useState({});
@@ -39,7 +41,7 @@ export default function ViewCoupon() {
         <Text fontSize={"20px"} fontWeight={"bold"}>
           Discount Amount
         </Text>
-        <Text>{data.amount}</Text>
+        <Text>{data.amount.toLocaleString()}</Text>
         {data.discountType === "PERCENT" ? (
           <>
             <Text fontSize={"20px"} fontWeight={"bold"}>
