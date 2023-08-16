@@ -55,7 +55,7 @@ export function SidebarLinks(props) {
         return (
           <NavLink key={index} to={route.layout + route.path}>
             {route.icon && !nested ? (
-              <Box id="nav">
+              <Box id={route.component_id}>
                 <HStack
                   spacing={
                     activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
@@ -120,6 +120,7 @@ export function SidebarLinks(props) {
                   py="5px"
                   ps="10px"
                   paddingLeft={nested ? 10 : 0}
+                  id={route.component_id}
                 >
                   <Text
                     me="auto"

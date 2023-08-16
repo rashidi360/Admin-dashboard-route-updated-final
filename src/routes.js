@@ -105,6 +105,7 @@ const routes = [
   },
   {
     name: "Counsellor",
+    component_id: "counsllor_nav_item",
     layout: "/admin",
     path: "/counsellor",
     icon: <Icon as={ImProfile} width="20px" height="20px" color="inherit" />,
@@ -112,6 +113,7 @@ const routes = [
     nested: [
       {
         name: "Rates",
+        component_id: "counsllor_nav_item_child_rates",
         layout: "/admin",
         path: "/counsellor/rates",
         // element: <Profile />,
