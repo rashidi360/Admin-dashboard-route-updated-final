@@ -8,7 +8,7 @@ import { Box, Text, Button, Flex } from "@chakra-ui/react";
 // CurrencyFormat
 import CurrencyFormat from "react-currency-format";
 
-export default function ViewCoupon() {
+export default function ViewRates() {
   const [data, setData] = useState({});
 
   let { id } = useParams();
@@ -17,7 +17,7 @@ export default function ViewCoupon() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/coupon/${id}`)
+      .get(`http://localhost:3333/counselor/rate/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -31,18 +31,18 @@ export default function ViewCoupon() {
     <Card mt={20}>
       <Box p={5} lineHeight={"8"}>
         <Text fontSize={"20px"} fontWeight={"bold"}>
-          Coupon Code
+          Counsellor Name
         </Text>
         <Text>{data.name}</Text>
         <Text fontSize={"20px"} fontWeight={"bold"}>
-          Discount Type
+          Hour From
         </Text>
-        <Text>{data.discountType}</Text>
+        <Text>{data.hourFrom}</Text>
         <Text fontSize={"20px"} fontWeight={"bold"}>
-          Discount Amount
+        Hour To
         </Text>
-        <Text>{data.amount}</Text>
-        {data.discountType === "PERCENT" ? (
+        <Text>{data.hourTo}</Text>
+        {/* {data.currencyType === "LKR" ? (
           <>
             <Text fontSize={"20px"} fontWeight={"bold"}>
               Max Discount
@@ -51,15 +51,19 @@ export default function ViewCoupon() {
           </>
         ) : (
           <></>
-        )}
+        )} */}
         <Text fontSize={"20px"} fontWeight={"bold"}>
-          Valid Through
+          Rate
         </Text>
-        <Text>{data.validThrough}</Text>
+        <Text>{data.rate}</Text>
         <Text fontSize={"20px"} fontWeight={"bold"}>
-          Used On
+          Country
         </Text>
-        <Text>{data.usedOn}</Text>
+        <Text>{data.country}</Text>
+        <Text fontSize={"20px"} fontWeight={"bold"}>
+          Currency
+        </Text>
+        <Text>{data.currency}</Text>
       </Box>
       <Flex justifyContent={"flex-start"} ml={3}>
         <Button onClick={() => navigate(-1)} colorScheme="blackAlpha">

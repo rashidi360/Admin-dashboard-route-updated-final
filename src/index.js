@@ -31,21 +31,31 @@ import Services from "views/admin/services";
 import SignInCentered from "views/auth/signIn";
 import NotFound from "views/NotFound";
 import Test from "views/admin/dataTables/components/Test";
+// Notification Template
 import Notification from "views/admin/notification-template";
 import Form from "views/admin/notification-template/components/Form";
 import ViewTemplate from "views/admin/notification-template/components/ViewTemplate";
 import UpdateForm from "views/admin/notification-template/components/UpdateForm";
+// Payment Option
 import PaymentOption from "views/admin/paymentOption";
 import VeiwPaymentOption from "views/admin/paymentOption/components/VeiwPaymentOption";
 import FormPaymentOption from "views/admin/paymentOption/components/FormPaymentOption";
 import UpdateFormPaymentOption from "views/admin/paymentOption/components/UpdateFormPaymentOption";
+// Coupons
 import Coupons from "views/admin/coupons";
 import ViewCoupon from "views/admin/coupons/components/ViewCoupon";
 import FormCoupon from "views/admin/coupons/components/FormCoupon";
 import UpdateFormCoupon from "views/admin/coupons/components/UpdateFormCoupon";
+// Location
 import Location from "views/admin/location";
+// Counsellor
 import Counsellor from "views/admin/counsellor";
+// Counsellor Rates
 import Rates from "views/admin/counsellor/rates";
+import ViewRates from "views/admin/counsellor/rates/components/ViewRates";
+import FormRates from "views/admin/counsellor/rates/components/FormRates";
+import UpdateFormRates from "views/admin/counsellor/rates/components/UpdateFormRates";
+
 
 
 //--------------------New Version Type1----------------------
@@ -157,22 +167,22 @@ const router = createBrowserRouter([
         path: "counsellor/rates",
         element: <Rates />,
       },
-      // {
-      //   path: "location/form",
-      //   element: <FormLocation />,
-      // },
-      // {
-      //   path: "location/view-template/:id",
-      //   element: <VeiwLocation />,
-      // },
-      // {
-      //   path: "location/update-form",
-      //   element: <UpdateFormLocation />,
-      // },
-      // {
-      //   path: "location/update-form/:id",
-      //   element: <UpdateFormLocation />,
-      // },
+      {
+        path: "counsellor/rates/form",
+        element: <FormRates />,
+      },
+      {
+        path: "counsellor/rates/view-template/:id",
+        element: <ViewRates />,
+      },
+      {
+        path: "counsellor/rates/update-form",
+        element: <UpdateFormRates />,
+      },
+      {
+        path: "counsellor/rates/update-form/:id",
+        element: <UpdateFormRates />,
+      },
       {
         path: "coupon/update-form/:id",
         element: <UpdateFormCoupon />,
