@@ -55,6 +55,8 @@ import Rates from "views/admin/counsellor/rates";
 import ViewRates from "views/admin/counsellor/rates/components/ViewRates";
 import FormRates from "views/admin/counsellor/rates/components/FormRates";
 import UpdateFormRates from "views/admin/counsellor/rates/components/UpdateFormRates";
+// Counsellor Profile
+import CProfile from "views/admin/counsellor/profile";
 
 
 
@@ -185,8 +187,32 @@ const router = createBrowserRouter([
       },
       {
         path: "coupon/update-form/:id",
-        element: <UpdateFormCoupon />,
+        element: <UpdateFormRates />,
       },
+      {
+        path: "counsellor/profiles",
+        element: <CProfile />,
+      },
+      // {
+      //   path: "counsellor/rates/form",
+      //   element: <FormRates />,
+      // },
+      // {
+      //   path: "counsellor/rates/view-template/:id",
+      //   element: <ViewRates />,
+      // },
+      // {
+      //   path: "counsellor/rates/update-form",
+      //   element: <UpdateFormRates />,
+      // },
+      // {
+      //   path: "counsellor/rates/update-form/:id",
+      //   element: <UpdateFormRates />,
+      // },
+      // {
+      //   path: "coupon/update-form/:id",
+      //   element: <UpdateFormCoupon />,
+      // },
       {
         path: "notification-template",
         element: <Notification />,

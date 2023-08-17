@@ -90,16 +90,18 @@ export function SidebarLinks(props) {
                       {route.name}
                     </Text>
                   </Flex>
-                  <Box
-                    h='36px'
-                    w='4px'
-                    bg={
-                      activeRoute(route.path.toLowerCase())
-                        ? brandColor
-                        : "transparent"
-                    }
-                    borderRadius='5px'
-                  />
+                  {!nested && (
+                    <Box
+                      h="36px"
+                      w="4px"
+                      bg={
+                        activeRoute(route.path.toLowerCase())
+                          ? brandColor
+                          : "transparent"
+                      }
+                      borderRadius="5px"
+                    />
+                  )}
                 </HStack>
                 {route.nested &&
                   activeRoute(route.path.toLowerCase()) &&
@@ -115,8 +117,11 @@ export function SidebarLinks(props) {
                       ? "22px"
                       : "26px"
                   }
-                  py='5px'
-                  ps='10px'>
+                  py="5px"
+                  ps="10px"
+                  paddingLeft={nested ? 10 : 0}
+                  id={route.component_id}
+                >
                   <Text
                     me="auto"
                     color={
@@ -130,7 +135,17 @@ export function SidebarLinks(props) {
                   >
                     {route.name}
                   </Text>
-                  <Box h='36px' w='4px' bg='brand.400' borderRadius='5px' />
+
+                  <Box
+                    h={nested ? "25px" : "36px"}
+                    w="4px"
+                    bg={
+                      activeRoute(route.path.toLowerCase())
+                        ? brandColor
+                        : "transparent"
+                    }
+                    borderRadius="5px"
+                  />
                 </HStack>
               </Box>
             )}
