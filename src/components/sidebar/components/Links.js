@@ -24,7 +24,7 @@ export function SidebarLinks(props) {
   };
 
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
-  const createLinks = (routes) => {
+  const createLinks = (routes, nested = false) => {
     return routes.map((route, index) => {
       if (route.category) {
         return (
@@ -54,8 +54,8 @@ export function SidebarLinks(props) {
       ) {
         return (
           <NavLink key={index} to={route.layout + route.path}>
-            {route.icon ? (
-              <Box id="nav">
+            {route.icon && !nested ? (
+              <Box id={route.component_id}>
                 <HStack
                   spacing={
                     activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
@@ -91,26 +91,32 @@ export function SidebarLinks(props) {
                     </Text>
                   </Flex>
                   <Box
-                    h="36px"
-                    w="4px"
+                    h='36px'
+                    w='4px'
                     bg={
                       activeRoute(route.path.toLowerCase())
                         ? brandColor
                         : "transparent"
                     }
-                    borderRadius="5px"
+                    borderRadius='5px'
                   />
                 </HStack>
+                {route.nested &&
+                  activeRoute(route.path.toLowerCase()) &&
+                  createLinks(route.nested, true)}
               </Box>
             ) : (
               <Box>
                 <HStack
                   spacing={
-                    activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
+                    !nested
+                      ? "50px"
+                      : activeRoute(route.path.toLowerCase())
+                      ? "22px"
+                      : "26px"
                   }
-                  py="5px"
-                  ps="10px"
-                >
+                  py='5px'
+                  ps='10px'>
                   <Text
                     me="auto"
                     color={
@@ -124,7 +130,7 @@ export function SidebarLinks(props) {
                   >
                     {route.name}
                   </Text>
-                  <Box h="36px" w="4px" bg="brand.400" borderRadius="5px" />
+                  <Box h='36px' w='4px' bg='brand.400' borderRadius='5px' />
                 </HStack>
               </Box>
             )}

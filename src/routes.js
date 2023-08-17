@@ -11,8 +11,6 @@ import {
   MdNotifications,
   MdOutlinePayment,
   MdLocationOn,
-  
-  
 } from "react-icons/md";
 
 import { ImProfile } from "react-icons/im";
@@ -107,20 +105,32 @@ const routes = [
   },
   {
     name: "Counsellor",
+    component_id: "counsllor_nav_item",
     layout: "/admin",
     path: "/counsellor",
-    icon: (
-      <Icon as={ImProfile} width="20px" height="20px" color="inherit" />
-    ),
+    icon: <Icon as={ImProfile} width="20px" height="20px" color="inherit" />,
     // element: <Profile />,
+    nested: [
+      {
+        name: "Rates",
+        component_id: "counsllor_nav_item_child_rates",
+        layout: "/admin",
+        path: "/counsellor/rates",
+        // element: <Profile />,
+      },
+      {
+        name: "Profiles",
+        layout: "/admin",
+        path: "/counsellor/profiles",
+        // element: <Profile />,
+      },
+    ],
   },
   {
     name: "Location",
     layout: "/admin",
     path: "/location",
-    icon: (
-      <Icon as={MdLocationOn} width="20px" height="20px" color="inherit" />
-    ),
+    icon: <Icon as={MdLocationOn} width="20px" height="20px" color="inherit" />,
     // element: <Profile />,
   },
   {
@@ -139,9 +149,9 @@ const routes = [
         path: "/form",
         // element: <Form />,
       },
-    ]
+    ],
   },
-  
+
   {
     path: "notification-template/view-template/:id",
     // element: <ViewTemplate />,

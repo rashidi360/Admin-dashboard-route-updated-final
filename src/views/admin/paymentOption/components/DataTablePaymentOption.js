@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Card from "components/card/Card";
 import APIData from "./APIDataPaymentOption";
 
-export default function DataTable() {
+export default function DataTablePaymentOption() {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
     <Card
