@@ -97,10 +97,10 @@ const router = createBrowserRouter([
       //     },
       //   ],
       // },
-      {
-        path: "profile",
-        element: <Profile />,
-      },
+      // {
+      //   path: "profile",
+      //   element: <Profile />,
+      // },
       {
         path: "services",
         element: <Services />,
@@ -154,11 +154,19 @@ const router = createBrowserRouter([
         element: <FormCoupon />,
       },
       {
+        path: "coupon/form/:id",
+        element: <FormCoupon />,
+      },
+      {
         path: "coupon/view-template/:id",
         element: <ViewCoupon />,
       },
       {
         path: "coupon/update-form",
+        element: <UpdateFormCoupon />,
+      },
+      {
+        path: "coupon/update-form/:id",
         element: <UpdateFormCoupon />,
       },
       {
@@ -186,12 +194,36 @@ const router = createBrowserRouter([
         element: <UpdateFormRates />,
       },
       {
-        path: "coupon/update-form/:id",
+        path: "counsellor/rates/update-form/:id",
         element: <UpdateFormRates />,
       },
       {
         path: "counsellor/profiles",
         element: <CProfile />,
+      },
+      // {
+      //   path: "counsellor/rates/form",
+      //   element: <FormRates />,
+      // },
+      // {
+      //   path: "counsellor/rates/view-template/:id",
+      //   element: <ViewRates />,
+      // },
+      // {
+      //   path: "counsellor/rates/update-form",
+      //   element: <UpdateFormRates />,
+      // },
+      // {
+      //   path: "counsellor/rates/update-form/:id",
+      //   element: <UpdateFormRates />,
+      // },
+      // {
+      //   path: "coupon/update-form/:id",
+      //   element: <UpdateFormCoupon />,
+      // },
+      {
+        path: "counsellor/data-form",
+        // element: <CProfile />,
       },
       // {
       //   path: "counsellor/rates/form",

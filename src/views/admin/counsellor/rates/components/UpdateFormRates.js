@@ -14,42 +14,29 @@ import {
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
+  Switch,
 } from "@chakra-ui/react";
-
+// Currency format
 import CurrencyFormat from "react-currency-format";
 
 import Card from "components/card/Card";
 
+// Country name and flag
+import ReactFlagsSelect from "react-flags-select";
+import { InfoIcon } from "@chakra-ui/icons";
+
+
 export default function UpdateFormRates() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
+  const [counsellorData, setCounsellorData] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // ---------------Refresh------------------------------------------
-  // Reload the page after form submission
-  const reloadAndNavigate = () => {
-    window.location.reload();
-    navigate(-1); // Make sure you have 'navigate' function available
-  };
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3333/counselor/rates/${id}`)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [id]);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const statuses = ["success", "error", "warning", "info"];
+  // Toast Popup Message
+  const statuses = ["success", "error", "warning", "info"];
 
     const toastMessagePopup = (title, description, status) => {
       toast({
@@ -62,23 +49,64 @@ export default function UpdateFormRates() {
       });
     };
 
-    // const couponDetails = {
-    //   name: data.name,
-    //   discountType: data.discountType,
-    //   amount: data.amount,
-    //   validThrough: data.validThrough,
-    //   // usedOn,
-    //   maxDiscount: data.maxDiscount,
-    // }
+  // ---------------Refresh------------------------------------------
+  // Reload the page after form submission
+  const reloadAndNavigate = () => {
+    window.location.reload();
+    navigate(-1); // Make sure you have 'navigate' function available
+  };
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3333/counselor/rate/${id}`)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        toastMessagePopup("Error fetching data", "Data base is not connected", statuses[1])
+      });
+  }, [id]);
+  const c_id = data.counselor
+  // console.log(c_id)
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3333/counselor/${c_id}`)
+      .then((response) => {
+        setCounsellorData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        // toastMessagePopup("Error fetching data", "Data base is not connected", statuses[1])
+        
+      });
+  }, [c_id]);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // const statuses = ["success", "error", "warning", "info"];
+
+    // const toastMessagePopup = (title, description, status) => {
+    //   toast({
+    //     title: title,
+    //     description: description,
+    //     status: status,
+    //     position: "top",
+    //     duration: 2000,
+    //     isClosable: true,
+    //   });
+    // };
+
+  
     const updatedPayload = {
       // name: name,
-      hourFrom: data.hourFrom,
-      hourTo: data.hourTo,
+      // hourFrom: data.hourFrom,
+      // hourTo: data.hourTo,
       rate: data.rate,
       currency: data.currency,
       country: data.country,
-      counsellor: data.counsellorId,
+      defaultRate: data.defaultRate,
+      // counsellor: data.counsellorId,
     };
 
     try {
@@ -104,7 +132,10 @@ export default function UpdateFormRates() {
     } finally {
       setIsSubmitting(false);
     }
+    // console.log("Rate data",data.rate)
+    
   };
+  
 
   return (
     <Card
@@ -126,13 +157,14 @@ export default function UpdateFormRates() {
         </Text>
       </Flex>
       <form method="POST" onSubmit={handleSubmit}>
-        <FormControl id="first-name" p={5}>
+        
+        <FormControl id="first-name" p={5} opacity={"50%"}>
           <FormLabel>Counsellor Name</FormLabel>
 
-          <Flex pr={10}>
+          <Flex pr={10} >
             <Input
               placeholder="Counsellor Name"
-              value={data.name}
+              value={counsellorData.displayName}
               borderRadius="5px"
               width={"64"}
               minLength={8}
@@ -141,7 +173,7 @@ export default function UpdateFormRates() {
           </Flex>
         </FormControl>
 
-        <FormControl display="flex" alignItems="center" p={5}>
+        <FormControl display="flex" alignItems="center" p={5} opacity={"50%"}>
           <FormLabel>Hour: </FormLabel>
           <FormLabel>From </FormLabel>
           <Input
@@ -161,22 +193,24 @@ export default function UpdateFormRates() {
 
         <FormControl p={5}>
           <FormLabel>Country</FormLabel>
-          <Select
-            // value={selectedOption}
-            // onChange={combinedOnChange}
-            width={"64"}
-          >
-            <option value="">Sri Lanka</option>
-            <option value="">USA</option>
-          </Select>
+          <ReactFlagsSelect
+            placeholder="Select Country"
+            selected={data.country}
+            onSelect={(target) => {
+              setData({ ...data, country: target });
+            }}
+            searchable
+            searchPlaceholder="Search countries"
+          />
         </FormControl>
 
         <FormControl p={5}>
           <FormLabel>Currency</FormLabel>
           <Select
             value={data.currency}
-            // onChange={combinedOnChange}
-            width={"64"}
+            onChange={(event) =>
+              setData({ ...data, currency: event.target.value })
+            }            width={"64"}
           >
             <option value="LKR">LKR</option>
             <option value="USD">USD</option>
@@ -236,6 +270,29 @@ export default function UpdateFormRates() {
               </Flex>
             </InputGroup>
           )}
+        </FormControl>
+
+        <FormControl p={5}>
+          <FormControl>
+            <FormLabel htmlFor="default-value-enable">
+              Default for undefined Rates
+            </FormLabel>
+            <Switch
+              isChecked={data.defaultRate}
+              id="default-value-enable"
+              colorScheme="blackAlpha"
+              py={3}
+              onChange={(event) =>
+                setData({ ...data, defaultRate: event.target.checked }) // Update the data with the new switch value
+              }
+                        />
+          </FormControl>
+
+          <Text>
+            <InfoIcon /> Make this combination the default rate for all customer
+            bookings that are not defined under rates. You can only mark one
+            rate definition as the default.
+          </Text>
         </FormControl>
 
         <Button

@@ -17,6 +17,7 @@ import {
 // import the custom component which was created separatly.
 import DeleteAlertDialog from "components/deleteConfirmationAlert/DeleteAlertDialog";
 import { Link, Outlet } from "react-router-dom";
+import CurrencyFormat from "react-currency-format";
 
 const APIData = () => {
   // State to keep track of the item being deleted
@@ -90,7 +91,7 @@ const APIData = () => {
           <Tr key={item.id}>
             <Td>{item.name}</Td>
             <Td>{item.discountType}</Td>
-            <Td>{item.amount}</Td>
+            <Td><CurrencyFormat value={item.amount} thousandSeparator suffix=".00"/></Td>
             <Td>{item.maxDiscount}</Td>
             <Td>{item.validThrough}</Td>
             <Td>{item.usedOn}</Td>

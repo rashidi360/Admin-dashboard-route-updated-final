@@ -69,12 +69,43 @@ const routes = [
   //     }
   //   ]
   // },
+  // {
+  //   name: "Profile",
+  //   layout: "/admin",
+  //   path: "/profile",
+  //   icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+  //   // element: <Profile />,
+  // },
+
+
   {
-    name: "Profile",
+    name: "Counsellor",
+    component_id: "counsllor_nav_item",
     layout: "/admin",
-    path: "/profile",
-    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+    path: "/counsellor",
+    icon: <Icon as={ImProfile} width="20px" height="20px" color="inherit" />,
     // element: <Profile />,
+    nested: [
+      {
+        name: "Rates",
+        component_id: "counsllor_nav_item_child_rates",
+        layout: "/admin",
+        path: "/counsellor/rates",
+        // element: <Profile />,
+      },
+      {
+        name: "Profiles",
+        layout: "/admin",
+        path: "/counsellor/profiles",
+        // element: <Profile />,
+      },
+      {
+        name: "Data Form",
+        layout: "/admin",
+        path: "/counsellor/data-form",
+        // element: <Profile />,
+      },
+    ],
   },
   {
     name: "Services",
@@ -102,29 +133,6 @@ const routes = [
       <Icon as={RiCoupon3Line} width="20px" height="20px" color="inherit" />
     ),
     // element: <Profile />,
-  },
-  {
-    name: "Counsellor",
-    component_id: "counsllor_nav_item",
-    layout: "/admin",
-    path: "/counsellor",
-    icon: <Icon as={ImProfile} width="20px" height="20px" color="inherit" />,
-    // element: <Profile />,
-    nested: [
-      {
-        name: "Rates",
-        component_id: "counsllor_nav_item_child_rates",
-        layout: "/admin",
-        path: "/counsellor/rates",
-        // element: <Profile />,
-      },
-      {
-        name: "Profiles",
-        layout: "/admin",
-        path: "/counsellor/profiles",
-        // element: <Profile />,
-      },
-    ],
   },
   {
     name: "Location",

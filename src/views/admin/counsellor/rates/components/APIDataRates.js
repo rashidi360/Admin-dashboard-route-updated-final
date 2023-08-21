@@ -16,13 +16,15 @@ import {
 } from "@chakra-ui/react";
 // import the custom component which was created separatly.
 import DeleteAlertDialog from "components/deleteConfirmationAlert/DeleteAlertDialog";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
+import CurrencyFormat from "react-currency-format";
 
 const APIDataRates = () => {
   // State to keep track of the item being deleted
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [counsellorData, setCounsellorData] = useState([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -37,7 +39,7 @@ const APIDataRates = () => {
   const fetchDataCounsellor = async () => {
     try {
       const response = await axios.get("http://localhost:3333/counselor");
-      setData(response.data);
+      setCounsellorData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -46,6 +48,8 @@ const APIDataRates = () => {
     fetchData();
     fetchDataCounsellor();
   }, []);
+  // console.log("data", data);
+  // console.log("counsellorData", counsellorData);
 
   if (!data) {
     return <Text p={10}>Loading...</Text>;
@@ -78,10 +82,26 @@ const APIDataRates = () => {
     setItemToDelete(null);
     onClose();
   };
-
+  // Merge two api datas togather
+  const mergeDataFn = (data, counsellorData) => {
+    let res = [];
+    res = data.map(obj => {
+      const index = counsellorData.findIndex(el => el["_id"] === obj["counselor"]);
+      const { displayName } = index !== -1 ? counsellorData[index] : {};
+      return {
+         ...obj,
+         displayName
+      };
+    })
+    return res;
+};
+// console.log("mergeData(data, counsellorData)(data, counsellorData)",mergeDataFn(data, counsellorData));
+  
+  const mergedData = mergeDataFn(data, counsellorData);
+  
   return (
     <Table variant="simple">
-      <TableCaption>Coupon Data</TableCaption>
+      <TableCaption>Counsellor Rate Data</TableCaption>
       <Thead>
         <Tr>
           <Th>Counsellor Name</Th>
@@ -95,12 +115,12 @@ const APIDataRates = () => {
       </Thead>
 
       <Tbody>
-        {data.map((item) => (
-          <Tr key={item.id}>
-            <Td>{item.name}</Td>
+        {mergedData.map((item) => (
+          <Tr key={item._id}>
+            <Td>{item.displayName}</Td>
             <Td>{item.hourFrom}</Td>
             <Td>{item.hourTo}</Td>
-            <Td>{item.rate}</Td>
+            <Td><CurrencyFormat value={item.rate} thousandSeparator suffix=".00" /> </Td>
             <Td>{item.country}</Td>
             <Td>{item.currency}</Td>
             <Td>
@@ -125,7 +145,7 @@ const APIDataRates = () => {
         ))}
       </Tbody>
       <Tfoot>
-      <Tr>
+        <Tr>
           <Th>Counsellor Name</Th>
           <Th>Hour From</Th>
           <Th>Hour To</Th>
