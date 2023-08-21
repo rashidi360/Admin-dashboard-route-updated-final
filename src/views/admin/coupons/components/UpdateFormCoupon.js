@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 
 import Card from "components/card/Card";
+import CurrencyFormat from "react-currency-format";
 
 export default function UpdateFormCoupon() {
   const [data, setData] = useState({});
@@ -25,6 +26,20 @@ export default function UpdateFormCoupon() {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
   const { id } = useParams();
+
+  // Toast Popup Message
+  const statuses = ["success", "error", "warning", "info"];
+
+    const toastMessagePopup = (title, description, status) => {
+      toast({
+        title: title,
+        description: description,
+        status: status,
+        position: "top",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
 
   // ---------------Refresh------------------------------------------
   // Reload the page after form submission
@@ -41,24 +56,14 @@ export default function UpdateFormCoupon() {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        toastMessagePopup("Error fetching data", "Data base is not connected", statuses[1])
+
       });
   }, [id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const statuses = ["success", "error", "warning", "info"];
-
-    const toastMessagePopup = (title, description, status) => {
-      toast({
-        title: title,
-        description: description,
-        status: status,
-        position: "top",
-        duration: 2000,
-        isClosable: true,
-      });
-    };
 
     // const couponDetails = {
     //   name: data.name,
@@ -98,6 +103,8 @@ export default function UpdateFormCoupon() {
     } finally {
       setIsSubmitting(false);
     }
+    console.log("coupon data",data.name)
+
   };
 
   return (
@@ -120,7 +127,7 @@ export default function UpdateFormCoupon() {
         </Text>
       </Flex>
       <form method="POST" onSubmit={handleSubmit}>
-        <FormControl id="first-name" p={5}>
+        <FormControl id="first-name" p={5} opacity={"50%"}>
           <FormLabel>Coupon Code</FormLabel>
 
           <FormControl display="flex" alignItems="center">
@@ -137,7 +144,7 @@ export default function UpdateFormCoupon() {
           </FormControl>
         </FormControl>
 
-        <FormControl p={5}>
+        <FormControl p={5} opacity={"50%"}>
           <FormLabel>Discount Type</FormLabel>
           <Select value={data.discountType} width={"64"} isReadOnly>
             <option value="FIXED">Fixed</option>
@@ -161,6 +168,28 @@ export default function UpdateFormCoupon() {
                 htmlSize={25}
                 width="auto"
               />
+              
+                {/* <Flex
+                pl={2}
+                border="1px solid #e2e8f0"
+                borderRadius="5px"
+                width="52"
+              >
+                <CurrencyFormat
+                  thousandSeparator={true}
+                  // prefix="LKR"
+                  suffix=".00"
+                  displayType="input"
+                  value={data.amount}
+                  maxLength={13}
+                  placeholder="Enter the Amount"
+                  onChange={(event) =>
+                    setData({ ...data, amount: event.target.value.replace(/,/g, "") })
+                  }
+                  style={{ outline: "none" }} // Remove focus outline
+                  // width="52"
+                />
+              </Flex> */}
             </InputGroup>
           ) : (
             <>
@@ -177,9 +206,13 @@ export default function UpdateFormCoupon() {
                 />
                 <InputRightAddon children="%" />
               </InputGroup>
-              <InputGroup pt={5}>
+              {/* <InputGroup pt={5}>
                 <InputLeftAddon children="LKR" />
-                <Input
+                <CurrencyFormat
+                thousandSeparator={true}
+                // prefix="LKR"
+                suffix=".00"
+                displayType="input"
                   type="number"
                   value={data.amount}
                   onChange={(event) =>
@@ -190,7 +223,7 @@ export default function UpdateFormCoupon() {
                   htmlSize={25}
                   width="auto"
                 />
-              </InputGroup>
+              </InputGroup> */}
             </>
           )}
         </FormControl>

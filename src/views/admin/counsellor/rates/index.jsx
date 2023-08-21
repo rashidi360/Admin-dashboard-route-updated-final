@@ -1,7 +1,10 @@
 import React from 'react'
+import DataTableRates from './components/DataTableRates'
+import { Box } from '@chakra-ui/react'
 
 export default function Rates() {
   return (
-    <div>Rates</div>
-  )
+<Box mt={20}>
+      <DataTableRates />
+    </Box>  )
 }

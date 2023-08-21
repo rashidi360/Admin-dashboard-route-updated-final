@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import 'assets/css/CustomStyleDatePicker.css'
+import "assets/css/CustomStyleDatePicker.css";
 
 import {
   NumberInput,
@@ -29,7 +29,7 @@ import {
   useToast,
   useColorModeValue,
   Switch,
-  CSSReset
+  CSSReset,
 } from "@chakra-ui/react";
 // Date Picker
 import ReactDatePicker from "react-datepicker";
@@ -44,7 +44,7 @@ import { blacken } from "@chakra-ui/theme-tools";
 
 export default function FormCoupon() {
   const [name, setName] = useState("");
-  // const [discountType, setDiscountType] = useState("");
+  const [discountType, setDiscountType] = useState("FIXED");
   const [amount, setAmount] = useState("");
   const [validThrough, setValidThrough] = useState(new Date());
   // const [usedOn, setUsedOn] = useState("");
@@ -58,12 +58,12 @@ export default function FormCoupon() {
   const navigate = useNavigate();
 
   //-------------------Discount type dropdown------------------------
-  const [selectedOption, setSelectedOption] = useState("FIXED");
+  // const [selectedOption, setSelectedOption] = useState("FIXED");
 
   // -------------------------Combined onChange Dropdown------------
   const combinedOnChange = (event) => {
-    // setDiscountType(event.target.value);
-    setSelectedOption(event.target.value);
+    setDiscountType(event.target.value);
+    // setSelectedOption(event.target.value);
   };
   console.log("numberOfCoupons", numberOfCoupons);
   // -------------------Coupon code switch----------------------------
@@ -110,7 +110,7 @@ export default function FormCoupon() {
         amount: amount,
         validThrough: validThrough,
         maxDiscount: maxDiscount,
-        discountType: selectedOption,
+        discountType: discountType,
       },
     };
     if (name.length === 8 || couponCodeEnabled) {
@@ -196,9 +196,10 @@ export default function FormCoupon() {
           <NumberInput
             value={numberOfCoupons}
             onChange={(target) => setNumberOfCoupons(target)}
-            max={30}
+            max={50}
             clampValueOnBlur={false}
             width={"64"}
+            min={0}
           >
             <NumberInputField />
             <NumberInputStepper>
@@ -211,8 +212,10 @@ export default function FormCoupon() {
         <FormControl p={5}>
           <FormLabel>Discount Type</FormLabel>
           <Select
-            value={selectedOption}
-            onChange={combinedOnChange}
+            value={discountType}
+            onChange={({ target }) =>
+              setDiscountType(target?.value)
+            }
             width={"64"}
           >
             <option value="FIXED">Fixed</option>
@@ -222,14 +225,16 @@ export default function FormCoupon() {
         <FormControl p={5}>
           <FormLabel>Discount Amount</FormLabel>
 
-          {selectedOption === "PERCENT" ? (
+          {discountType === "PERCENT" ? (
             <>
               <InputGroup>
                 <Input
                   type="number"
                   value={maxDiscount}
                   placeholder="Enter percentage"
-                  onChange={({ target }) => setMaxDiscount(target?.value.slice(0,2))}
+                  onChange={({ target }) =>
+                    setMaxDiscount(target?.value.slice(0, 2))
+                  }
                   htmlSize={25}
                   width="auto"
                 />
@@ -258,8 +263,13 @@ export default function FormCoupon() {
           ) : (
             <InputGroup>
               <InputLeftAddon children="LKR" />
-              <Flex pl={2} border="1px solid #e2e8f0" borderRadius="5px" width="52">
-                <CurrencyFormat 
+              <Flex
+                pl={2}
+                border="1px solid #e2e8f0"
+                borderRadius="5px"
+                width="52"
+              >
+                <CurrencyFormat
                   thousandSeparator={true}
                   // prefix="LKR"
                   suffix=".00"
@@ -270,10 +280,10 @@ export default function FormCoupon() {
                   onChange={({ target }) =>
                     setAmount(target?.value.replace(/,/g, ""))
                   }
-                  style={{ outline: 'none' }} // Remove focus outline
+                  style={{ outline: "none" }} // Remove focus outline
                   // width="52"
                 />
-                </Flex>
+              </Flex>
             </InputGroup>
           )}
         </FormControl>
@@ -289,7 +299,12 @@ export default function FormCoupon() {
             borderRadius="5px"
             width={"64"}
           /> */}
-            <Flex p={2} border="1px solid #e2e8f0" borderRadius="5px" width="64">
+            <Flex
+              p={2}
+              border="1px solid #e2e8f0"
+              borderRadius="5px"
+              width="64"
+            >
               <ReactDatePicker
                 showTimeSelect
                 // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
@@ -300,7 +315,6 @@ export default function FormCoupon() {
                 dateFormat="dd/MM/yyyy h:mm aa"
                 timeFormat="HH:mm"
                 className="custom-react-datepicker"
-                
               />
             </Flex>
           </InputGroup>

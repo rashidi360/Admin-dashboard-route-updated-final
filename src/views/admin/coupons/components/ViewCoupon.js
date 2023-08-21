@@ -41,7 +41,7 @@ export default function ViewCoupon() {
         <Text fontSize={"20px"} fontWeight={"bold"}>
           Discount Amount
         </Text>
-        <Text>{data.amount.toLocaleString()}</Text>
+        <Text>{data.amount}</Text>
         {data.discountType === "PERCENT" ? (
           <>
             <Text fontSize={"20px"} fontWeight={"bold"}>
