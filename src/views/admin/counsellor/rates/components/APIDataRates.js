@@ -30,7 +30,7 @@ const APIDataRates = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3333/counselor/rate");
+      const response = await axios.get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor/rate`);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -38,7 +38,7 @@ const APIDataRates = () => {
   };
   const fetchDataCounsellor = async () => {
     try {
-      const response = await axios.get("http://localhost:3333/counselor");
+      const response = await axios.get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor`);
       setCounsellorData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -63,7 +63,7 @@ const APIDataRates = () => {
   const handleDeleteConfirmed = () => {
     if (itemToDelete) {
       axios
-        .delete(`http://localhost:3333/counselor/rate/${itemToDelete}`)
+        .delete(`${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor/rate/${itemToDelete}`)
         .then((response) => {
           console.log("Item deleted successfully:", response.data);
         })
@@ -85,20 +85,22 @@ const APIDataRates = () => {
   // Merge two api datas togather
   const mergeDataFn = (data, counsellorData) => {
     let res = [];
-    res = data.map(obj => {
-      const index = counsellorData.findIndex(el => el["_id"] === obj["counselor"]);
+    res = data.map((obj) => {
+      const index = counsellorData.findIndex(
+        (el) => el["_id"] === obj["counselor"]
+      );
       const { displayName } = index !== -1 ? counsellorData[index] : {};
       return {
-         ...obj,
-         displayName
+        ...obj,
+        displayName,
       };
-    })
+    });
     return res;
-};
-// console.log("mergeData(data, counsellorData)(data, counsellorData)",mergeDataFn(data, counsellorData));
-  
+  };
+  // console.log("mergeData(data, counsellorData)(data, counsellorData)",mergeDataFn(data, counsellorData));
+
   const mergedData = mergeDataFn(data, counsellorData);
-  
+
   return (
     <Table variant="simple">
       <TableCaption>Counsellor Rate Data</TableCaption>
@@ -120,7 +122,13 @@ const APIDataRates = () => {
             <Td>{item.displayName}</Td>
             <Td>{item.hourFrom}</Td>
             <Td>{item.hourTo}</Td>
-            <Td><CurrencyFormat value={item.rate} thousandSeparator suffix=".00" /> </Td>
+            <Td>
+              <CurrencyFormat
+                value={item.rate}
+                thousandSeparator
+                suffix=".00"
+              />{" "}
+            </Td>
             <Td>{item.country}</Td>
             <Td>{item.currency}</Td>
             <Td>

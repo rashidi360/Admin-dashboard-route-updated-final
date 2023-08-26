@@ -5,8 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Box, Text, Button, Flex } from "@chakra-ui/react";
+// CurrencyFormat
+import CurrencyFormat from "react-currency-format";
 
-export default function VeiwPaymentOption() {
+export default function ViewDataForm() {
   const [data, setData] = useState({});
 
   let { id } = useParams();
@@ -15,7 +17,7 @@ export default function VeiwPaymentOption() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/payment/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/data-form/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -29,13 +31,36 @@ export default function VeiwPaymentOption() {
     <Card mt={20}>
       <Box p={5} lineHeight={"8"}>
         <Text fontSize={"20px"} fontWeight={"bold"}>
-          Name
+          Title
         </Text>
-        <Text>{data.name}</Text>
+        <Text>{data.title}</Text>
         <Text fontSize={"20px"} fontWeight={"bold"}>
           Description
         </Text>
         <Text>{data.description}</Text>
+        <Text fontSize={"20px"} fontWeight={"bold"}>
+          Type
+        </Text>
+        <Text>{data.type}</Text>
+       
+        {data.discountType === "PERCENT" ? (
+          <>
+            <Text fontSize={"20px"} fontWeight={"bold"}>
+              Max Discount
+            </Text>
+            <Text>{data.maxDiscount}</Text>
+          </>
+        ) : (
+          <></>
+        )}
+        <Text fontSize={"20px"} fontWeight={"bold"}>
+          Valid Through
+        </Text>
+        <Text>{data.validThrough}</Text>
+        <Text fontSize={"20px"} fontWeight={"bold"}>
+          Used On
+        </Text>
+        <Text>{data.usedOn}</Text>
       </Box>
       <Flex justifyContent={"flex-start"} ml={3}>
         <Button onClick={() => navigate(-1)} colorScheme="blackAlpha">

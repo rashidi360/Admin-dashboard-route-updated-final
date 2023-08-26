@@ -19,7 +19,7 @@ import DeleteAlertDialog from "components/deleteConfirmationAlert/DeleteAlertDia
 import { Link, Outlet } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
 
-const APIData = () => {
+const APIDataDataForm = () => {
   // State to keep track of the item being deleted
   const [itemToDelete, setItemToDelete] = useState(null);
 
@@ -29,7 +29,7 @@ const APIData = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/coupon`);
+      const response = await axios.get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/data-form`);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -51,7 +51,7 @@ const APIData = () => {
   const handleDeleteConfirmed = () => {
     if (itemToDelete) {
       axios
-        .delete(`${process.env.REACT_APP_ADMIN_PORTAL_API}/coupon/${itemToDelete}`)
+        .delete(`${process.env.REACT_APP_ADMIN_PORTAL_API}/data-form/${itemToDelete}`)
         .then((response) => {
           console.log("Item deleted successfully:", response.data);
         })
@@ -73,15 +73,12 @@ const APIData = () => {
 
   return (
     <Table variant="simple">
-      <TableCaption>Coupon Data</TableCaption>
+      <TableCaption>Data Form Data</TableCaption>
       <Thead>
         <Tr>
-          <Th>Coupon Code</Th>
-          <Th>Discount Type</Th>
-          <Th>Discount Amount</Th>
-          <Th>Maximum Discount</Th>
-          <Th>Valid Through</Th>
-          <Th>Used On</Th>
+          <Th>Title</Th>
+          <Th>Description</Th>
+          <Th>Type</Th>
           <Th>View/Edit/Delete</Th>
         </Tr>
       </Thead>
@@ -89,12 +86,9 @@ const APIData = () => {
       <Tbody>
         {data.map((item) => (
           <Tr key={item.id}>
-            <Td>{item.name}</Td>
-            <Td>{item.discountType}</Td>
-            <Td><CurrencyFormat value={item.amount} thousandSeparator suffix=".00"/></Td>
-            <Td>{item.maxDiscount}</Td>
-            <Td>{item.validThrough}</Td>
-            <Td>{item.usedOn}</Td>
+            <Td>{item.title}</Td>
+            <Td>{item.description}</Td>
+            <Td>{item.type}</Td>
             <Td>
               <Flex>
                 <Button onClick={() => handleDelete(item._id)}>
@@ -118,12 +112,9 @@ const APIData = () => {
       </Tbody>
       <Tfoot>
         <Tr>
-          <Th>Coupon Code</Th>
-          <Th>Discount Type</Th>
-          <Th>Discount Amount</Th>
-          <Th>Maximum Discount</Th>
-          <Th>Valid Through</Th>
-          <Th>Used On</Th>
+          <Th>Title</Th>
+          <Th>Description</Th>
+          <Th>Type</Th>
           <Th>View/Edit/Delete</Th>
         </Tr>
       </Tfoot>
@@ -137,4 +128,4 @@ const APIData = () => {
   );
 };
 
-export default APIData;
+export default APIDataDataForm;

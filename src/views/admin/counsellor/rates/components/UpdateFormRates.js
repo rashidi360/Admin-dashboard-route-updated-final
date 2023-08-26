@@ -58,7 +58,7 @@ export default function UpdateFormRates() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/counselor/rate/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor/rate/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -71,7 +71,7 @@ export default function UpdateFormRates() {
   // console.log(c_id)
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/counselor/${c_id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor/${c_id}`)
       .then((response) => {
         setCounsellorData(response.data);
       })
@@ -112,7 +112,7 @@ export default function UpdateFormRates() {
     try {
       setIsSubmitting(true);
       await axios.patch(
-        `http://localhost:3333/counselor/rate/${id}`,
+        `${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor/rate/${id}`,
         updatedPayload
       );
       console.log("Form updated successfully!");

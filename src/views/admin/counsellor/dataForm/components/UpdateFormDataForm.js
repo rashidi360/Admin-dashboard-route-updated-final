@@ -14,12 +14,13 @@ import {
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
+  Textarea,
 } from "@chakra-ui/react";
 
 import Card from "components/card/Card";
 import CurrencyFormat from "react-currency-format";
 
-export default function UpdateFormCoupon() {
+export default function UpdateFormDataForm() {
   const [data, setData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
@@ -50,7 +51,7 @@ export default function UpdateFormCoupon() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/coupon/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/data-form/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -75,17 +76,14 @@ export default function UpdateFormCoupon() {
     // }
 
     const updatedPayload = {
-      // couponDetails,
-      // name: data.name,
-      // discountType: data.discountType,
-      amount: data.amount,
-      validThrough: data.validThrough,
-      maxDiscount: data.maxDiscount,
+      title: data.title,
+      description: data.description,
+      type: data.type,
     };
 
     try {
       setIsSubmitting(true);
-      await axios.patch(`${process.env.REACT_APP_ADMIN_PORTAL_API}/coupon/${id}`, updatedPayload);
+      await axios.patch(`${process.env.REACT_APP_ADMIN_PORTAL_API}/data-form/${id}`, updatedPayload);
       console.log("Form updated successfully!");
       toastMessagePopup(
         "Application updated!",
@@ -127,6 +125,38 @@ export default function UpdateFormCoupon() {
         </Text>
       </Flex>
       <form method="POST" onSubmit={handleSubmit}>
+      <FormControl id="title"  p={5} opacity={"50%"}>
+          <FormLabel>Title</FormLabel>
+          <Input
+            placeholder="Title"
+            value={data.title}
+            // onChange={({ target }) => setTitle(target?.value)}
+            borderRadius="5px"
+            readOnly
+          />
+        </FormControl>
+        <FormControl spacing={3} p={5} opacity={"50%"}>
+            <FormLabel>Enter Your Description</FormLabel>
+            <Textarea
+              placeholder="Enter the Description"
+              value={data.description}
+              // onChange={({ target }) => setDescription(target?.value)}
+              // boxSize={"md"}
+              p={5}
+              readOnly
+            ></Textarea>
+        </FormControl>
+        <FormControl  p={5}>
+          <FormLabel>Type</FormLabel>
+          <Select
+            placeholder="Select the Type"
+            value={data.type}
+            // onChange={({ target }) => setType(target?.value)}
+          >
+            <option value="BASIC">Basic</option>
+            <option value="DYNAMIC">Dynamic</option>
+          </Select>
+        </FormControl>
         <FormControl id="first-name" p={5} opacity={"50%"}>
           <FormLabel>Coupon Code</FormLabel>
 
@@ -233,7 +263,7 @@ export default function UpdateFormCoupon() {
             placeholder="Valid Through"
             value={data.validThrough}
             onChange={(event) =>
-              setData({ ...data, validThrough: event.target.value })
+              setData({ ...data, validThrough: event.target.value.toString() })
             }
             borderRadius="5px"
             width={"64"}

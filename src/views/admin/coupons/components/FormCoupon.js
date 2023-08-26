@@ -116,7 +116,7 @@ export default function FormCoupon() {
     if (name.length === 8 || couponCodeEnabled) {
       try {
         setIsSubmitting(true);
-        await axios.post("http://localhost:3333/coupon", teamPayload);
+        await axios.post(`${process.env.REACT_APP_ADMIN_PORTAL_API}/coupon`, teamPayload);
         console.log("Form submitted successfully!");
         setFormSubmissionData(teamPayload);
         toastMessagePopup(

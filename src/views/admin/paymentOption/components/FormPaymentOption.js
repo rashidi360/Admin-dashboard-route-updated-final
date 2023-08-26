@@ -28,10 +28,10 @@ export default function FormPaymentOption() {
   const [formSubmissionData, setFormSubmissionData] = useState(null);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
-
+// refresh and navigate back
   const reloadAndNavigate = () => {
     window.location.reload();
-    navigate(-1); // Make sure you have 'navigate' function available
+    navigate(-1); 
   };
 
   const handleSubmit = async (event) => {
@@ -56,7 +56,7 @@ export default function FormPaymentOption() {
     if (name && description) {
       try {
         setIsSubmitting(true);
-        await axios.post("http://localhost:3333/payment", teamPayload);
+        await axios.post(`${process.env.REACT_APP_ADMIN_PORTAL_API}/payment`, teamPayload);
         console.log("Form submitted successfully!");
         setFormSubmissionData(teamPayload);
         toastMessagePopup(

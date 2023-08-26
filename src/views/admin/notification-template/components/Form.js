@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import {
   Flex,
@@ -10,7 +10,6 @@ import {
   FormLabel,
   Input,
   Select,
-  Stack,
   Textarea,
   Button,
   useToast,
@@ -18,19 +17,22 @@ import {
 } from "@chakra-ui/react";
 
 import Card from "components/card/Card";
-import CustomUseState from "./CustemUseState";
 
 export default function Form() {
-  // const [name, setName] = useState("");
-  // const [type, setType] = useState("");
-  // const [template, setTemplate] = useState("");
-  const { name, setName, type, setType, template, setTemplate } =
-    CustomUseState();
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [template, setTemplate] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
   const [formSubmissionData, setFormSubmissionData] = useState(null);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
+
+  // refresh and navigate back
+  const reloadAndNavigate = () => {
+    window.location.reload();
+    navigate(-1);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -55,7 +57,10 @@ export default function Form() {
     if (name && type && template) {
       try {
         setIsSubmitting(true);
-        await axios.post("http://localhost:3333/notification", teamPayload);
+        await axios.post(
+          `${process.env.REACT_APP_ADMIN_PORTAL_API}/notification`,
+          teamPayload
+        );
         console.log("Form submitted successfully!");
         setFormSubmissionData(teamPayload);
         toastMessagePopup(
@@ -63,6 +68,7 @@ export default function Form() {
           "Thanks for submitting your application. Our team will get back to you soon.",
           statuses[0]
         );
+        setTimeout(reloadAndNavigate, 2000);
       } catch (error) {
         console.error("Error:", error);
         // console.log("Form Submitted Failed inside if");
@@ -77,11 +83,6 @@ export default function Form() {
         statuses[1]
       );
     }
-    // Reload the page after form submission, regardless of success or failure
-    setTimeout(() => {
-      window.location.reload();
-      navigate(-1);
-    }, 2000); // Adjust the delay (in milliseconds) as needed to give the user enough time to see the toast message.
   };
   return (
     <Card
@@ -101,10 +102,9 @@ export default function Form() {
         >
           Notification Template
         </Text>
-        
       </Flex>
       <form method="POST" onSubmit={handleSubmit}>
-        <FormControl id="first-name"  p={5}>
+        <FormControl id="first-name" p={5}>
           <FormLabel>Name</FormLabel>
           <Input
             placeholder="Name"
@@ -113,7 +113,7 @@ export default function Form() {
             borderRadius="5px"
           />
         </FormControl>
-        <FormControl  p={5}>
+        <FormControl p={5}>
           <FormLabel>Type</FormLabel>
           <Select
             placeholder="Select the Type"
@@ -124,17 +124,15 @@ export default function Form() {
             <option value="SMS">SMS</option>
           </Select>
         </FormControl>
-        <FormControl>
-          <Stack spacing={3} p={5}>
-            <FormLabel>Enter Your Template</FormLabel>
-            <Textarea
-              placeholder="Enter the message"
-              value={template}
-              onChange={({ target }) => setTemplate(target?.value)}
-              boxSize={"lg"}
-              p={5}
-            ></Textarea>
-          </Stack>
+        <FormControl spacing={3} p={5}>
+          <FormLabel>Enter Your Template</FormLabel>
+          <Textarea
+            placeholder="Enter the message"
+            value={template}
+            onChange={({ target }) => setTemplate(target?.value)}
+            boxSize={"lg"}
+            p={5}
+          ></Textarea>
         </FormControl>
         <Button
           onClick={handleSubmit}
@@ -148,12 +146,6 @@ export default function Form() {
           Create
         </Button>
       </form>
-      {/* {formSubmissionData && (
-        <AlertPop
-          title="Application submitted!"
-          description="Thanks for submitting your application. Our team will get back to you soon."
-        />
-      )} */}
     </Card>
   );
 }

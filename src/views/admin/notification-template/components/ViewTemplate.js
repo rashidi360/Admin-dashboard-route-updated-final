@@ -1,57 +1,21 @@
 import Card from "components/card/Card";
 import React from "react";
 import axios from "axios";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useOutletContext,
-  Link,
-} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
-import DataFetcher from "./DataFetcher";
-import CustomUseState from "./CustemUseState";
-import { get } from "lodash";
 import { Box, Text, Button, Flex } from "@chakra-ui/react";
 
-export default function ViewTemplate(props) {
-  const { name, setName, type, setType, template, setTemplate } =
-    CustomUseState();
-
+export default function ViewTemplate() {
   const [data, setData] = useState({});
 
   let { id } = useParams();
-  let location = useLocation();
   let navigate = useNavigate();
-  console.log(id);
-  console.log(location);
-
-  // const {item} = useOutletContext();
-
-  // const view = item.find((view) => view.id === id );
-
-  // if (!view){
-  //   return "*Id didn't match fo template"
-  // }
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:3333/notification/${id}`);
-  //       setData(response.data);
-  // } catch (error) {
-  //   console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-  // console.log("data: ", data)
+  // console.log(id);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/notification/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/notification/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -78,7 +42,9 @@ export default function ViewTemplate(props) {
         <Text>{data.template}</Text>
       </Box>
       <Flex justifyContent={"flex-start"} ml={3}>
-      <Button onClick={() => navigate(-1) } colorScheme="blackAlpha" >Back</Button>
+        <Button onClick={() => navigate(-1)} colorScheme="blackAlpha">
+          Back
+        </Button>
       </Flex>
     </Card>
   );

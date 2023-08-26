@@ -22,7 +22,7 @@ export default function ViewRates() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/counselor/rate/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor/rate/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -36,7 +36,7 @@ export default function ViewRates() {
   const c_id = data.counselor
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/counselor/${c_id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor/${c_id}`)
       .then((response) => {
         setCounsellorData(response.data);
       })

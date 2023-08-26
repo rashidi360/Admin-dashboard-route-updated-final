@@ -26,7 +26,7 @@ const APIData = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3333/payment");
+      const response = await axios.get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/payment`);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -48,7 +48,7 @@ const APIData = () => {
   const handleDeleteConfirmed = () => {
     if (itemToDelete) {
       axios
-        .delete(`http://localhost:3333/payment/${itemToDelete}`)
+        .delete(`${process.env.REACT_APP_ADMIN_PORTAL_API}/payment/${itemToDelete}`)
         .then((response) => {
           console.log("Item deleted successfully:", response.data);
         })

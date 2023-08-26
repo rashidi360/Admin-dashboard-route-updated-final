@@ -27,7 +27,7 @@ export default function UpdateForm() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/notification/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/notification/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -61,7 +61,7 @@ export default function UpdateForm() {
     try {
       setIsSubmitting(true);
       await axios.patch(
-        `http://localhost:3333/notification/${id}`,
+        `${process.env.REACT_APP_ADMIN_PORTAL_API}/notification/${id}`,
         updatedPayload
       );
       console.log("Form updated successfully!");

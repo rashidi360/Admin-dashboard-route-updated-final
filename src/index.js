@@ -57,7 +57,11 @@ import FormRates from "views/admin/counsellor/rates/components/FormRates";
 import UpdateFormRates from "views/admin/counsellor/rates/components/UpdateFormRates";
 // Counsellor Profile
 import CProfile from "views/admin/counsellor/profile";
-
+// Counsellor Data Form
+import DataForm from "views/admin/counsellor/dataForm";
+import ViewDataForm from "views/admin/counsellor/dataForm/components/ViewDataForm";
+import FormDataForm from "views/admin/counsellor/dataForm/components/FormDataForm";
+import UpdateFormDataForm from "views/admin/counsellor/dataForm/components/UpdateFormDataForm";
 
 
 //--------------------New Version Type1----------------------
@@ -105,6 +109,7 @@ const router = createBrowserRouter([
         path: "services",
         element: <Services />,
       },
+      //----------PaymentOption------------
       {
         path: "payment-option",
         element: <PaymentOption />,
@@ -125,6 +130,7 @@ const router = createBrowserRouter([
         path: "payment-option/update-form/:id",
         element: <UpdateFormPaymentOption />,
       },
+      //----------Location------------
       {
         path: "location",
         element: <Location />,
@@ -145,6 +151,7 @@ const router = createBrowserRouter([
       //   path: "location/update-form/:id",
       //   element: <UpdateFormLocation />,
       // },
+      //----------Coupons------------
       {
         path: "coupon",
         element: <Coupons />,
@@ -169,10 +176,12 @@ const router = createBrowserRouter([
         path: "coupon/update-form/:id",
         element: <UpdateFormCoupon />,
       },
+      //----------Counsellor------------
       {
         path: "counsellor",
         element: <Counsellor />,
       },
+      //----------CounsellorRates------------
       {
         path: "counsellor/rates",
         element: <Rates />,
@@ -197,6 +206,7 @@ const router = createBrowserRouter([
         path: "counsellor/rates/update-form/:id",
         element: <UpdateFormRates />,
       },
+      //----------CProfile------------
       {
         path: "counsellor/profiles",
         element: <CProfile />,
@@ -221,30 +231,28 @@ const router = createBrowserRouter([
       //   path: "coupon/update-form/:id",
       //   element: <UpdateFormCoupon />,
       // },
+      //------------DataForm--------------
       {
         path: "counsellor/data-form",
-        // element: <CProfile />,
+        element: <DataForm />,
       },
-      // {
-      //   path: "counsellor/rates/form",
-      //   element: <FormRates />,
-      // },
-      // {
-      //   path: "counsellor/rates/view-template/:id",
-      //   element: <ViewRates />,
-      // },
-      // {
-      //   path: "counsellor/rates/update-form",
-      //   element: <UpdateFormRates />,
-      // },
-      // {
-      //   path: "counsellor/rates/update-form/:id",
-      //   element: <UpdateFormRates />,
-      // },
-      // {
-      //   path: "coupon/update-form/:id",
-      //   element: <UpdateFormCoupon />,
-      // },
+      {
+        path: "counsellor/data-form/form",
+        element: <FormDataForm />,
+      },
+      {
+        path: "counsellor/data-form/view-template/:id",
+        element: <ViewDataForm />,
+      },
+      {
+        path: "counsellor/data-form/update-form",
+        element: <UpdateFormDataForm />,
+      },
+      {
+        path: "counsellor/data-form/update-form/:id",
+        element: <UpdateFormDataForm />,
+      },
+      //----------Notification------------
       {
         path: "notification-template",
         element: <Notification />,

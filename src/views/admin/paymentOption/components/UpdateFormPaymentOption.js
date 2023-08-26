@@ -31,7 +31,7 @@ export default function UpdateFormPaymentOption() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/payment/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/payment/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -63,7 +63,7 @@ export default function UpdateFormPaymentOption() {
 
     try {
       setIsSubmitting(true);
-      await axios.patch(`http://localhost:3333/payment/${id}`, updatedPayload);
+      await axios.patch(`${process.env.REACT_APP_ADMIN_PORTAL_API}/payment/${id}`, updatedPayload);
       console.log("Form updated successfully!");
       toastMessagePopup(
         "Application updated!",

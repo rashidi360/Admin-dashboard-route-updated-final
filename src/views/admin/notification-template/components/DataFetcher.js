@@ -26,8 +26,7 @@ const DataFetcher = () => {
   // const [name, setName] = useState("");
   // const [type, setType] = useState("");
   // const [template, setTemplate] = useState("");
-  const { name, setName, type, setType, template, setTemplate } =
-    CustomUseState();
+  
   const [data, setData] = useState(null);
   const [uname, usetName] = useState("");
   const [utype, usetType] = useState("");
@@ -39,7 +38,9 @@ const DataFetcher = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3333/notification");
+      const response = await axios.get(
+        `${process.env.REACT_APP_ADMIN_PORTAL_API}/notification`
+      );
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -50,16 +51,16 @@ const DataFetcher = () => {
   }, []);
 
   if (!data) {
-    return <Text p={10} >Loading...</Text>;
+    return <Text p={10}>Loading...</Text>;
   }
 
   // const handleDelete = (deleteId) => {
-    
+
   //   let confirmationMessage = prompt("Please enter 'delete' to confirm delete");
   //   if (confirmationMessage === "delete") {
   //     // Make a DELETE request using Axios
   //     axios
-  //       .delete(`http://localhost:3333/notification/${deleteId}`)
+  //       .delete(`${process.env.REACT_APP_ADMIN_PORTAL_API}/notification/${deleteId}`)
   //       .then((response) => {
   //         // Handle success, e.g., display a message or update the state
   //         console.log("Item deleted successfully:", response.data);
@@ -97,9 +98,7 @@ const DataFetcher = () => {
   //   onClose(); // Close the delete confirmation dialog
   // };
 
-
   // -----------------------------------------------------------
-
 
   const handleDelete = (itemId) => {
     setShowPopup(true);
@@ -110,7 +109,9 @@ const DataFetcher = () => {
   const handleDeleteConfirmed = () => {
     if (itemToDelete) {
       axios
-        .delete(`http://localhost:3333/notification/${itemToDelete}`)
+        .delete(
+          `${process.env.REACT_APP_ADMIN_PORTAL_API}/notification/${itemToDelete}`
+        )
         .then((response) => {
           console.log("Item deleted successfully:", response.data);
         })
@@ -129,7 +130,6 @@ const DataFetcher = () => {
     setItemToDelete(null);
     onClose();
   };
-
 
   return (
     <Table variant="simple">

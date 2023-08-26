@@ -17,7 +17,7 @@ export default function ViewCoupon() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3333/coupon/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/coupon/${id}`)
       .then((response) => {
         setData(response.data);
       })

@@ -33,7 +33,6 @@ import {
 } from "@chakra-ui/react";
 // Select dropdown
 import ReactSelect from "react-select";
-
 // Date Picker
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -45,13 +44,10 @@ import CurrencyFormat from "react-currency-format";
 import ReactFlagsSelect from "react-flags-select";
 
 import Card from "components/card/Card";
-import { blacken } from "@chakra-ui/theme-tools";
 
 export default function FormRates() {
-  const [selected, setSelected] = useState("");
 
   const [counsellorId, setCounsellorId] = useState("");
-  const [name, setName] = useState("");
 
   const [hourFrom, setHourFrom] = useState("");
   const [hourTo, setHourTo] = useState("");
@@ -65,27 +61,12 @@ export default function FormRates() {
   const [formSubmissionData, setFormSubmissionData] = useState(null);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
-
-  //-------------------React Select Drop Down------------------------
-
-  // const axiosInstance = axios.create({
-  //   baseURL: "http://localhost:3333",
-  //   headers: {
-  //     // Add headers here if needed
-  //   },
-  // });
-
-  // const fetchCounsellors = async () => {
-  //   const result = await axiosInstance.get('/counselor');
-  //   const res = result.data.displayName;
-  //   return res;
-  // }
-
+  // Counsellor API Calling
   const [counsellorData, setCounsellorData] = useState([]);
 
   const fetchDataCounsellor = async () => {
     try {
-      const response = await axios.get("http://localhost:3333/counselor");
+      const response = await axios.get(`${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor`);
       setCounsellorData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -110,33 +91,9 @@ export default function FormRates() {
     setCounsellorId(selectedOption?.value);
   };
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  // console.log("counsellorData", counsellorData);
+  // console.log("counsellorOptions", counsellorOptions);
 
-  console.log("counsellorData", counsellorData);
-
-  console.log("counsellorOptions", counsellorOptions);
-
-  // Default Country List
-  const defaultCountry = ["US", "LK"];
-
-  //-------------------Discount type dropdown------------------------
-  const [selectedOption, setSelectedOption] = useState("LKR");
-
-  // -------------------------Combined onChange Dropdown------------
-  const combinedOnChange = (event) => {
-    // setDiscountType(event.target.value);
-    setSelectedOption(event.target.value);
-  };
-  // -------------------Coupon code switch----------------------------
-  const [couponCodeEnabled, setCouponCodeEnabled] = useState(false);
-  const autoGenarateOn = () => {
-    setCouponCodeEnabled(!couponCodeEnabled);
-    setName("");
-  };
   // ---------------Refresh------------------------------------------
   // Reload the page after form submission
   const reloadAndNavigate = () => {
@@ -159,14 +116,8 @@ export default function FormRates() {
       });
     };
 
-    // if(selectedOption === "USD"){
-    //  couponDetails = {
-    //   ...couponDetails,
-    //   discountType : selectedOption,
-
-    // }}
+    
     const teamPayload = {
-      // name: name,
       hourFrom: hourFrom,
       hourTo: hourTo,
       rate: rate,
@@ -181,7 +132,7 @@ export default function FormRates() {
     try {
       setIsSubmitting(true);
       await axios.post(
-        `http://localhost:3333/counselor/${counsellor}/rate`,
+        `${process.env.REACT_APP_ADMIN_PORTAL_API}/counselor/${counsellor}/rate`,
         teamPayload
       );
       console.log("Form submitted successfully!");
@@ -244,22 +195,6 @@ export default function FormRates() {
             placeholder="Search for a Counsellor"
           />
         </FormControl>
-
-        {/* <FormControl p={5}>
-          <FormLabel>Country</FormLabel>
-          <Select
-            // value={selectedOption}
-            // onChange={combinedOnChange}
-            width={"64"}
-            // loadOptions={fetchCounsellors}
-            
-          >
-            {counsellorData.map((item) => (
-            <option key={item.id} value="">{item.displayName}</option>
-            // <option value="">USA</option>
-            ))}
-          </Select>
-        </FormControl> */}
 
         <FormControl display="flex" alignItems="center" p={5}>
           <FormLabel>Hour: </FormLabel>
