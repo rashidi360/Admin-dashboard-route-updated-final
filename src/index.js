@@ -33,9 +33,9 @@ import NotFound from "views/NotFound";
 import Test from "views/admin/dataTables/components/Test";
 // Notification Template
 import Notification from "views/admin/notification-template";
-import Form from "views/admin/notification-template/components/Form";
-import ViewTemplate from "views/admin/notification-template/components/ViewTemplate";
-import UpdateForm from "views/admin/notification-template/components/UpdateForm";
+import FormNotificationTemplate from "views/admin/notification-template/components/FormNotificationTemplate";
+import ViewNotificationTemplate from "views/admin/notification-template/components/ViewNotificationTemplate";
+import UpdateFormNotificationTemplate from "views/admin/notification-template/components/UpdateFormNotificationTemplate";
 // Payment Option
 import PaymentOption from "views/admin/paymentOption";
 import VeiwPaymentOption from "views/admin/paymentOption/components/VeiwPaymentOption";
@@ -259,19 +259,19 @@ const router = createBrowserRouter([
       },
       {
         path: "notification-template/form",
-        element: <Form />,
+        element: <FormNotificationTemplate />,
       },
       {
         path: "notification-template/view-template/:id",
-        element: <ViewTemplate />,
+        element: <ViewNotificationTemplate />,
       },
       {
         path: "notification-template/update-form",
-        element: <UpdateForm />,
+        element: <UpdateFormNotificationTemplate />,
       },
       {
         path: "notification-template/update-form/:id",
-        element: <UpdateForm />,
+        element: <UpdateFormNotificationTemplate />,
       },
     ],
   },

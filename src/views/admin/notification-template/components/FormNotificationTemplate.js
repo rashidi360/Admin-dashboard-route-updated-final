@@ -18,12 +18,11 @@ import {
 
 import Card from "components/card/Card";
 
-export default function Form() {
+export default function FormNotificationTemplate() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [template, setTemplate] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const toast = useToast();
   const [formSubmissionData, setFormSubmissionData] = useState(null);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
@@ -34,20 +33,23 @@ export default function Form() {
     navigate(-1);
   };
 
+  // Toast popup message
+  const toast = useToast();
+  const statuses = ["success", "error", "warning", "info"];
+
+  const toastMessagePopup = (title, description, status) => {
+    toast({
+      title: title,
+      description: description,
+      status: status,
+      position: "top",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const statuses = ["success", "error", "warning", "info"];
-    const toastMessagePopup = (title, description, status) => {
-      toast({
-        title: title,
-        description: description,
-        status: status,
-        position: "top",
-        duration: 2000,
-        isClosable: true,
-      });
-    };
 
     const teamPayload = {
       name,
@@ -64,8 +66,8 @@ export default function Form() {
         console.log("Form submitted successfully!");
         setFormSubmissionData(teamPayload);
         toastMessagePopup(
-          "Application submitted!",
-          "Thanks for submitting your application. Our team will get back to you soon.",
+          "Submitted Successfully",
+          "New Notification Template Created Successfully",
           statuses[0]
         );
         setTimeout(reloadAndNavigate, 2000);
@@ -78,8 +80,8 @@ export default function Form() {
     } else {
       console.log("Form Submitted Failed!");
       toastMessagePopup(
-        "Application Submission Failed!",
-        "Form Submitted Failed!",
+        "Submission Failed!",
+        "Notification Template Creation Failed",
         statuses[1]
       );
     }
@@ -104,7 +106,7 @@ export default function Form() {
         </Text>
       </Flex>
       <form method="POST" onSubmit={handleSubmit}>
-        <FormControl id="first-name" p={5}>
+        <FormControl id="name" p={5}>
           <FormLabel>Name</FormLabel>
           <Input
             placeholder="Name"

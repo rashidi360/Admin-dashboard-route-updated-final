@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { Box, Flex, Button, useToast } from "@chakra-ui/react";
-import Card from "components/card/Card";
 import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Table,
@@ -14,28 +13,35 @@ import {
   TableCaption,
   useDisclosure,
   Text,
+  Flex,
+  Button,
+  useToast,
 } from "@chakra-ui/react";
-// import the custom state which was created separatly.
-import CustomUseState from "./CustemUseState";
-import DeleteAlertDialog from "./DeleteAlertDialog";
-import { Link, Outlet } from "react-router-dom";
+import DeleteAlertDialog from "components/deleteConfirmationAlert/DeleteAlertDialog";
 
-const DataFetcher = () => {
+const APIDataNotificationTemplate = () => {
   // State to keep track of the item being deleted
   const [itemToDelete, setItemToDelete] = useState(null);
-  // const [name, setName] = useState("");
-  // const [type, setType] = useState("");
-  // const [template, setTemplate] = useState("");
-  
-  const [data, setData] = useState(null);
-  const [uname, usetName] = useState("");
-  const [utype, usetType] = useState("");
-  const [utemplate, usetTemplate] = useState("");
-  const [editId, setEditId] = useState(-1);
-  const [deleteId, setDeleteId] = useState(-1);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPopup, setShowPopup] = useState(false);
+  const [data, setData] = useState(null);
 
+  // Toast popup message
+  const toast = useToast();
+  const statuses = ["success", "error", "warning", "info"];
+
+  const toastMessagePopup = (title, description, status) => {
+    toast({
+      title: title,
+      description: description,
+      status: status,
+      position: "top",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
+
+  //fetching the data
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -44,6 +50,11 @@ const DataFetcher = () => {
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
+      toastMessagePopup(
+        "Data Fetching Error",
+        "There was an error while getting the data from Notificatin Template Data Base.",
+        statuses[1]
+      );
     }
   };
   useEffect(() => {
@@ -53,53 +64,7 @@ const DataFetcher = () => {
   if (!data) {
     return <Text p={10}>Loading...</Text>;
   }
-
-  // const handleDelete = (deleteId) => {
-
-  //   let confirmationMessage = prompt("Please enter 'delete' to confirm delete");
-  //   if (confirmationMessage === "delete") {
-  //     // Make a DELETE request using Axios
-  //     axios
-  //       .delete(`${process.env.REACT_APP_ADMIN_PORTAL_API}/notification/${deleteId}`)
-  //       .then((response) => {
-  //         // Handle success, e.g., display a message or update the state
-  //         console.log("Item deleted successfully:", response.data);
-  //         alert("Template deleted");
-  //       })
-  //       .catch((error) => {
-  //         // Handle error, e.g., display an error message
-  //         console.error("Error deleting item:", error);
-  //         alert("Template not deleted");
-  //       });
-  //     // refreshing the page after deleting
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 2000);
-  //   } else {
-  //     alert("Template delete failed");
-  //   }
-  // };
-
-  // const handleDeleteClick = (item) => {
-  //   setItemToDelete(item);
-  //   onOpen(); // Open the delete confirmation dialog
-  // };
-
-  // const handleDeleteConfirm = () => {
-  //   if (itemToDelete) {
-  //     handleDelete(itemToDelete._id);
-  //     setItemToDelete(null);
-  //     onClose(); // Close the delete confirmation dialog
-  //   }
-  // };
-
-  // const handleDeleteCancel = () => {
-  //   setItemToDelete(null);
-  //   onClose(); // Close the delete confirmation dialog
-  // };
-
-  // -----------------------------------------------------------
-
+// Delete function (popup confimation and delete)
   const handleDelete = (itemId) => {
     setShowPopup(true);
     setItemToDelete(itemId);
@@ -113,10 +78,20 @@ const DataFetcher = () => {
           `${process.env.REACT_APP_ADMIN_PORTAL_API}/notification/${itemToDelete}`
         )
         .then((response) => {
-          console.log("Item deleted successfully:", response.data);
+          console.log("Item deleted successfully.", response.data);
+          toastMessagePopup(
+            "Successfully Deleted!",
+            "Notication Template Deleted Successfully",
+            statuses[0]
+          );
         })
         .catch((error) => {
           console.error("Error deleting item:", error);
+          toastMessagePopup(
+            "Deletion Failed!",
+            "Notication Template Deletion Failed",
+            statuses[1]
+          );
         })
         .finally(() => {
           setItemToDelete(null);
@@ -160,14 +135,11 @@ const DataFetcher = () => {
                   </Button>
                 </Link>
                 <Link to={`update-form/${item._id}`}>
-                  <Button
-                  // onClick={() => handleEdit(item._id)}
-                  >
+                  <Button>
                     <EditIcon />
                   </Button>
                 </Link>
               </Flex>
-              <Outlet context={{ item }} />
             </Td>
           </Tr>
         ))}
@@ -190,4 +162,4 @@ const DataFetcher = () => {
   );
 };
 
-export default DataFetcher;
+export default APIDataNotificationTemplate;

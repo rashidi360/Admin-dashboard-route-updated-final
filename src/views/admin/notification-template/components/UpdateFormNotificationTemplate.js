@@ -17,13 +17,33 @@ import {
 
 import Card from "components/card/Card";
 
-export default function UpdateForm() {
+export default function UpdateFormNotificationTemplate() {
   const [data, setData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const toast = useToast();
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const navigate = useNavigate();
   const { id } = useParams();
+
+  // refresh and navigate back
+  const reloadAndNavigate = () => {
+    window.location.reload();
+    navigate(-1);
+  };
+
+  // Toast popup message
+  const toast = useToast();
+  const statuses = ["success", "error", "warning", "info"];
+
+  const toastMessagePopup = (title, description, status) => {
+    toast({
+      title: title,
+      description: description,
+      status: status,
+      position: "top",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
 
   useEffect(() => {
     axios
@@ -39,19 +59,6 @@ export default function UpdateForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const statuses = ["success", "error", "warning", "info"];
-
-    const toastMessagePopup = (title, description, status) => {
-      toast({
-        title: title,
-        description: description,
-        status: status,
-        position: "top",
-        duration: 2000,
-        isClosable: true,
-      });
-    };
-
     const updatedPayload = {
       // name: data.name,
       // type: data.type,
@@ -66,25 +73,21 @@ export default function UpdateForm() {
       );
       console.log("Form updated successfully!");
       toastMessagePopup(
-        "Application updated!",
-        "Your template has been updated successfully.",
+        "Updated Successfully!",
+        "Your Notificatin Template has been Updated Successfully.",
         statuses[0]
       );
+      setTimeout(reloadAndNavigate, 2000);
     } catch (error) {
       console.error("Error:", error);
       toastMessagePopup(
         "Update Failed",
-        "There was an error while updating the template.",
+        "There was an error while updating the Notificatin Template.",
         statuses[1]
       );
     } finally {
       setIsSubmitting(false);
     }
-    // Reload the page after form submission, regardless of success or failure
-    setTimeout(() => {
-      window.location.reload();
-      navigate(-1);
-    }, 2000); // Adjust the delay (in milliseconds) as needed to give the user enough time to see the toast message.
   };
 
   return (

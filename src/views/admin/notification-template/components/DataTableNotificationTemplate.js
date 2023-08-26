@@ -4,7 +4,7 @@ import Card from "components/card/Card";
 
 import { Flex, Text, useColorModeValue, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import DataFetcher from "./DataFetcher";
+import APIDataNotificationTemplate from "./APIDataNotificationTemplate";
 
 export default function DataTable() {
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -37,8 +37,8 @@ export default function DataTable() {
         </Link>
       </Flex>
       </Flex>
-      {/* calling the DataFetcher component to display the data base.  */}
-      <DataFetcher />
+      {/* calling the APIDataNotificationTemplate component to display the data table which is from base.  */}
+      <APIDataNotificationTemplate />
     </Card>
   );
 }
