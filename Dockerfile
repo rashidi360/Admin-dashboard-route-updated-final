@@ -1,10 +1,16 @@
-FROM node:18
+FROM node:18 as builder
 
-WORKDIR "/app"
+WORKDIR "/Admin dashboard - route final updated"
+
+ENV PATH="./node_modules/.bin:$PATH"
 
 COPY package.json .
 
+COPY package-lock.json .
+
 RUN npm install
+
+RUN npm run build
 
 COPY . .
 
